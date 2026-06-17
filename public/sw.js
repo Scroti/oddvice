@@ -1,6 +1,6 @@
 /* Oddvice service worker — offline caching + push notifications.
  * Versioned cache: bump CACHE_VERSION to invalidate old caches on deploy. */
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_NAME = `oddvice-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline";
 
@@ -34,6 +34,12 @@ self.addEventListener("fetch", (event) => {
 
   // Only handle GET requests; let the network handle everything else.
   if (request.method !== "GET") return;
+
+  // Only handle same-origin http(s) requests. This skips unsupported schemes
+  // (e.g. chrome-extension://) and cross-origin calls like the API, which the
+  // Cache API can't store and shouldn't cache here.
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
 
   // Navigations: network-first, fall back to cache, then the offline page.
   if (request.mode === "navigate") {
