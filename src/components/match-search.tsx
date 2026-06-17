@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { searchMatches, type Match } from "@/lib/api";
 
@@ -110,7 +111,11 @@ function MatchCard({ match }: { match: Match }) {
   const date = match.kickoffAt?.slice(0, 10) ?? "";
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+    <Link
+      href={`/matches/${match.id}`}
+      prefetch={false}
+      className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/40 hover:bg-white/[0.04]"
+    >
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
         <TeamSide name={match.homeTeam} align="end" />
 
@@ -136,7 +141,7 @@ function MatchCard({ match }: { match: Match }) {
           {[date, match.venue].filter(Boolean).join(" · ")}
         </p>
       )}
-    </div>
+    </Link>
   );
 }
 

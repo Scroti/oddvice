@@ -15,7 +15,6 @@ export const TABS: Tab[] = [
   { href: "/bets", label: "Ponturi", icon: "spark" },
   { href: "/watch", label: "Watch", icon: "watch" },
   { href: "/news", label: "Știri", icon: "news" },
-  { href: "/profile", label: "Profil", icon: "user" },
 ];
 
 export function isActive(pathname: string, href: string): boolean {

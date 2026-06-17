@@ -31,6 +31,9 @@ export type Match = {
   venue?: string;
   kickoffAt: string | null;
   thumbnail?: string;
+  homeBadge?: string;
+  awayBadge?: string;
+  video?: string;
 };
 
 export type MatchSearchResponse = {
@@ -38,6 +41,17 @@ export type MatchSearchResponse = {
   count: number;
   matches: Match[];
 };
+
+/** Fetches a single match by id. Returns null on 404. */
+export async function getMatch(id: string): Promise<Match | null> {
+  const res = await fetch(
+    `${API_URL}/api/v1/football/matches/${encodeURIComponent(id)}`,
+    { cache: "no-store" },
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<Match>;
+}
 
 /** Searches football matches via the Go API. Throws on non-2xx responses. */
 export async function searchMatches(

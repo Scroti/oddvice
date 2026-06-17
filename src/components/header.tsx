@@ -5,10 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TABS, isActive } from "./nav-config";
 
+// Sections reachable outside the bottom-nav tabs (e.g. Profil via the header).
+const EXTRA_TITLES: Record<string, string> = { "/profile": "Profil" };
+
 /** Title of the current section (null on Home, where we show the brand). */
 function currentTitle(pathname: string): string | null {
   const tab = TABS.find((t) => t.href !== "/" && isActive(pathname, t.href));
-  return tab ? tab.label : null;
+  if (tab) return tab.label;
+  for (const [href, label] of Object.entries(EXTRA_TITLES)) {
+    if (isActive(pathname, href)) return label;
+  }
+  return null;
 }
 
 /** Fixed top bar: logo + (page title or brand) on the left, actions right. */
@@ -60,6 +67,26 @@ export function Header() {
           </svg>
           <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#C8F04A]" />
         </button>
+
+        <Link
+          href="/profile"
+          aria-label="Profil"
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-[#C8F04A]/50 hover:text-white"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="8" r="3.2" />
+            <path d="M5 20a7 7 0 0 1 14 0" />
+          </svg>
+        </Link>
       </div>
     </header>
   );
