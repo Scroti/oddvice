@@ -11,27 +11,25 @@ export function BottomNav() {
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#020B0A]/90 backdrop-blur lg:hidden">
-      <ul className="mx-auto flex max-w-md items-stretch justify-around px-2 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+      <ul className="mx-auto flex max-w-md items-stretch px-1 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))]">
         {TABS.map((tab) => {
           const active = isActive(pathname, tab.href);
           return (
-            <li key={tab.href}>
+            <li key={tab.href} className="flex-1">
               <Link
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
-                className="flex w-16 flex-col items-center gap-1"
+                className="flex flex-col items-center gap-1"
               >
                 <span
-                  className={`grid h-9 w-12 place-items-center rounded-full transition-colors ${
-                    active
-                      ? "bg-[#C8F04A]/15 text-[#C8F04A]"
-                      : "text-white/55"
+                  className={`grid h-7 w-10 place-items-center rounded-full transition-colors ${
+                    active ? "bg-[#C8F04A]/15 text-[#C8F04A]" : "text-white/55"
                   }`}
                 >
-                  <NavIcon name={tab.icon} size={20} />
+                  <NavIcon name={tab.icon} size={19} />
                 </span>
                 <span
-                  className={`text-[11px] transition-colors ${
+                  className={`text-[10px] transition-colors ${
                     active ? "font-semibold text-[#C8F04A]" : "text-white/55"
                   }`}
                 >

@@ -12,6 +12,7 @@ export type Tab = {
 export const TABS: Tab[] = [
   { href: "/", label: "Acasă", icon: "home" },
   { href: "/matches", label: "Meciuri", icon: "ball" },
+  { href: "/bets", label: "Ponturi", icon: "spark" },
   { href: "/watch", label: "Watch", icon: "watch" },
   { href: "/news", label: "Știri", icon: "news" },
   { href: "/profile", label: "Profil", icon: "user" },
