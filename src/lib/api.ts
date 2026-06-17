@@ -51,3 +51,38 @@ export async function searchMatches(
   if (!res.ok) throw new Error(`API responded with ${res.status}`);
   return res.json() as Promise<MatchSearchResponse>;
 }
+
+export type Article = {
+  id: string;
+  title: string;
+  link: string;
+  source: string;
+  image: string;
+  summary: string;
+  publishedAt: string | null;
+};
+
+export type NewsResponse = {
+  count: number;
+  articles: Article[];
+};
+
+/** Fetches the latest news. Cached for 5 minutes on the server. */
+export async function getNews(): Promise<NewsResponse> {
+  const res = await fetch(`${API_URL}/api/v1/news`, {
+    next: { revalidate: 300 },
+  });
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<NewsResponse>;
+}
+
+/** Fetches a single article by id. Returns null on 404. */
+export async function getArticle(id: string): Promise<Article | null> {
+  const res = await fetch(
+    `${API_URL}/api/v1/news/${encodeURIComponent(id)}`,
+    { next: { revalidate: 300 } },
+  );
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<Article>;
+}
