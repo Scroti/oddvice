@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/page-header";
 import { InstallPrompt } from "@/components/pwa";
+import { ApiStatus } from "@/components/api-status";
 
 export const metadata = { title: "Profil" };
 
@@ -21,6 +22,11 @@ export default function ProfilePage() {
       </ul>
 
       <InstallPrompt />
+
+      <div className="flex items-center justify-between text-xs text-white/40">
+        <span>Stare server</span>
+        <ApiStatus />
+      </div>
     </div>
   );
 }

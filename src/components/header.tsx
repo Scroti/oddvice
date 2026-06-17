@@ -1,51 +1,29 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { TABS, isActive } from "./nav-config";
 
-/** Title of the current section (null on Home, where we show the brand). */
-function currentTitle(pathname: string): string | null {
-  const tab = TABS.find((t) => t.href !== "/" && isActive(pathname, t.href));
-  return tab ? tab.label : null;
-}
-
-/** Sticky top bar. On mobile it shows the page title (or the brand on Home);
- * on desktop it always shows the brand. Right side holds global actions. */
+/** Minimal sticky top bar: brand on the left, global actions on the right.
+ * Each page owns its own large title in the content area. */
 export function Header() {
-  const pathname = usePathname();
-  const title = currentTitle(pathname);
-
   return (
     <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-[#020B0A]/90 px-4 backdrop-blur lg:px-6">
-      <div className="flex items-center gap-2.5">
-        {/* Brand: always on desktop; on mobile only when there's no page title. */}
-        <Link
-          href="/"
-          className={`items-center gap-2.5 ${title ? "hidden lg:flex" : "flex"}`}
-        >
-          <Image
-            src="/icon.svg"
-            alt="Oddvice"
-            width={30}
-            height={30}
-            className="rounded-lg"
-            unoptimized
-            priority
-          />
-          <span className="text-base font-semibold tracking-tight">Oddvice</span>
-        </Link>
-
-        {/* Mobile-only page title. */}
-        {title && (
-          <h1 className="text-base font-semibold lg:hidden">{title}</h1>
-        )}
-      </div>
+      <Link href="/" className="flex items-center gap-2.5">
+        <Image
+          src="/icon.svg"
+          alt="Oddvice"
+          width={30}
+          height={30}
+          className="rounded-lg"
+          unoptimized
+          priority
+        />
+        <span className="font-display text-lg font-extrabold uppercase tracking-tight">
+          Oddvice
+        </span>
+      </Link>
 
       <div className="flex items-center gap-2">
-        <span className="mr-1 hidden rounded-full border border-white/15 px-2.5 py-1 text-xs text-white/60 sm:inline">
-          Cupa Mondială 2026
+        <span className="mr-1 hidden rounded-full border border-[#37F06C]/30 bg-[#37F06C]/10 px-2.5 py-1 text-xs font-semibold text-[#37F06C] sm:inline">
+          WC 2026
         </span>
 
         <button
