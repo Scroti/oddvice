@@ -38,7 +38,7 @@ export default async function ArticlePage({
 
       <div className="flex items-center gap-2 text-xs text-white/50">
         {article.source && (
-          <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
+          <span className="rounded-full bg-[#C8F04A]/15 px-2 py-0.5 font-medium text-[#C8F04A]">
             {article.source}
           </span>
         )}
@@ -57,7 +57,7 @@ export default async function ArticlePage({
         href={article.link}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#37F06C] px-5 py-2.5 text-sm font-medium text-[#020B0A] transition-colors hover:bg-[#5af588]"
+        className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-medium text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
       >
         Citește pe site
         <span aria-hidden>↗</span>

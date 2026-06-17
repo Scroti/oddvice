@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-6">
       {/* Featured: pontul zilei */}
-      <section className="relative overflow-hidden rounded-2xl border border-[#37F06C]/25 bg-gradient-to-br from-[#37F06C]/20 via-white/[0.02] to-transparent p-6">
-        <span className="text-xs font-bold uppercase tracking-widest text-[#37F06C]">
+      <section className="relative overflow-hidden rounded-2xl border border-[#C8F04A]/25 bg-gradient-to-br from-[#C8F04A]/20 via-white/[0.02] to-transparent p-6">
+        <span className="text-xs font-bold uppercase tracking-widest text-[#C8F04A]">
           Pontul zilei
         </span>
         <h1 className="mt-2 max-w-md font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-tight">
@@ -24,7 +24,7 @@ export default function Home() {
         </p>
         <Link
           href="/bets"
-          className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#37F06C] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#5af588]"
+          className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
         >
           Vezi ponturile →
         </Link>
@@ -36,9 +36,9 @@ export default function Home() {
           <Link
             key={link.href}
             href={link.href}
-            className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
+            className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/50 hover:bg-white/[0.04]"
           >
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#37F06C]/15 text-[#37F06C]">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#C8F04A]/15 text-[#C8F04A]">
               <NavIcon name={link.icon} size={20} />
             </span>
             <div>

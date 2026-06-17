@@ -10,11 +10,11 @@ export function NewsCard({ article }: { article: Article }) {
     <Link
       href={`/news/${article.id}`}
       prefetch={false}
-      className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
+      className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/50 hover:bg-white/[0.04]"
     >
       <div className="mb-2 flex items-center gap-2 text-xs text-white/45">
         {article.source && (
-          <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
+          <span className="rounded-full bg-[#C8F04A]/15 px-2 py-0.5 font-medium text-[#C8F04A]">
             {article.source}
           </span>
         )}
@@ -31,7 +31,7 @@ export function NewsCard({ article }: { article: Article }) {
         </p>
       )}
 
-      <span className="mt-3 text-xs font-medium text-[#37F06C]">Citește →</span>
+      <span className="mt-3 text-xs font-medium text-[#C8F04A]">Citește →</span>
     </Link>
   );
 }

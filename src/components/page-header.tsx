@@ -9,7 +9,7 @@ export function PageHeader({ subtitle }: { subtitle?: string }) {
 export function ComingSoon({ note }: { note: string }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
-      <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#37F06C]/15 text-[#37F06C]">
+      <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#C8F04A]/15 text-[#C8F04A]">
         <svg
           width="22"
           height="22"

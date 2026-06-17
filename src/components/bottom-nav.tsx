@@ -23,11 +23,11 @@ export function BottomNav() {
                   aria-label={tab.label}
                   className="flex flex-col items-center gap-1"
                 >
-                  <span className="grid h-14 w-14 place-items-center rounded-full bg-[#37F06C] text-[#020B0A] shadow-lg shadow-[#37F06C]/20 ring-4 ring-[#020B0A] transition-transform active:scale-95">
+                  <span className="grid h-14 w-14 place-items-center rounded-full bg-[#C8F04A] text-[#020B0A] shadow-lg shadow-[#C8F04A]/20 ring-4 ring-[#020B0A] transition-transform active:scale-95">
                     <NavIcon name={tab.icon} size={26} />
                   </span>
                   <span
-                    className={`text-[11px] ${active ? "text-[#37F06C]" : "text-white/60"}`}
+                    className={`text-[11px] ${active ? "text-[#C8F04A]" : "text-white/60"}`}
                   >
                     {tab.label}
                   </span>
@@ -42,7 +42,7 @@ export function BottomNav() {
                 href={tab.href}
                 aria-current={active ? "page" : undefined}
                 className={`flex w-16 flex-col items-center gap-1 py-1 text-[11px] transition-colors ${
-                  active ? "text-[#37F06C]" : "text-white/55 hover:text-white/80"
+                  active ? "text-[#C8F04A]" : "text-white/55 hover:text-white/80"
                 }`}
               >
                 <NavIcon name={tab.icon} />

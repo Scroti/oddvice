@@ -58,7 +58,7 @@ export function InstallPrompt() {
       {deferred ? (
         <button
           onClick={install}
-          className="rounded-md bg-[#37F06C] px-3 py-1.5 font-medium text-[#020B0A] hover:bg-[#5af588] transition-colors"
+          className="rounded-md bg-[#C8F04A] px-3 py-1.5 font-medium text-[#020B0A] hover:bg-[#D8FB6A] transition-colors"
         >
           Add to Home Screen
         </button>
