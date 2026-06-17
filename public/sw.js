@@ -1,11 +1,12 @@
 /* Oddvice service worker — offline caching + push notifications.
  * Versioned cache: bump CACHE_VERSION to invalidate old caches on deploy. */
-const CACHE_VERSION = "v4";
+const CACHE_VERSION = "v5";
 const CACHE_NAME = `oddvice-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline";
 
-// Pre-cache the app shell so the app opens while offline.
-const PRECACHE_URLS = ["/", OFFLINE_URL, "/manifest.webmanifest"];
+// Pre-cache only the offline fallback. We deliberately do NOT cache HTML pages,
+// so navigations always reflect the latest content (no stale pages).
+const PRECACHE_URLS = [OFFLINE_URL, "/manifest.webmanifest"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -45,23 +46,11 @@ self.addEventListener("fetch", (event) => {
   // hit the network directly (avoids double-fetching and caching stale data).
   if (url.searchParams.has("_rsc")) return;
 
-  // Navigations: network-first, fall back to cache, then the offline page.
+  // Navigations: always go to the network (fresh HTML); fall back to the
+  // offline page only when the network is unreachable. Pages are never cached,
+  // so a deploy is reflected immediately.
   if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches
-            .open(CACHE_NAME)
-            .then((cache) => cache.put(request, copy))
-            .catch(() => {});
-          return response;
-        })
-        .catch(async () => {
-          const cached = await caches.match(request);
-          return cached || caches.match(OFFLINE_URL);
-        })
-    );
+    event.respondWith(fetch(request).catch(() => caches.match(OFFLINE_URL)));
     return;
   }
 
