@@ -53,8 +53,8 @@ export function InstallPrompt() {
   }
 
   return (
-    <div className="rounded-lg border border-black/10 dark:border-white/15 p-4 text-sm">
-      <h3 className="font-medium mb-2">Install Oddvice</h3>
+    <div className="rounded-lg border border-white/15 p-4 text-sm">
+      <h3 className="font-medium mb-2">Instalează Oddvice</h3>
       {deferred ? (
         <button
           onClick={install}
@@ -63,14 +63,14 @@ export function InstallPrompt() {
           Add to Home Screen
         </button>
       ) : isIOS ? (
-        <p className="text-black/70 dark:text-white/70">
-          Tap the Share button{" "}
-          <span aria-label="share">⎋</span> then{" "}
+        <p className="text-white/70">
+          Apasă butonul Share{" "}
+          <span aria-label="share">⎋</span> apoi{" "}
           <strong>Add to Home Screen</strong>.
         </p>
       ) : (
-        <p className="text-black/70 dark:text-white/70">
-          Use your browser menu to install this app.
+        <p className="text-white/70">
+          Folosește meniul browserului pentru a instala aplicația.
         </p>
       )}
     </div>

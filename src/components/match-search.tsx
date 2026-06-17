@@ -43,7 +43,7 @@ export function MatchSearch() {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="e.g. Arsenal vs Chelsea"
           aria-label="Match search"
-          className="flex-1 rounded-md border border-black/15 dark:border-white/20 bg-transparent px-3 py-2 text-sm outline-none focus:border-[#37F06C]"
+          className="flex-1 rounded-md border border-white/20 bg-transparent px-3 py-2 text-sm outline-none focus:border-[#37F06C]"
         />
         <button
           type="submit"
@@ -59,26 +59,24 @@ export function MatchSearch() {
           <p className="text-sm text-red-500">Error: {state.message}</p>
         )}
         {state.kind === "done" && state.matches.length === 0 && (
-          <p className="text-sm text-black/60 dark:text-white/60">
-            No matches found.
-          </p>
+          <p className="text-sm text-white/60">Niciun meci găsit.</p>
         )}
         {state.kind === "done" && state.matches.length > 0 && (
           <ul className="flex flex-col gap-2">
             {state.matches.map((m) => (
               <li
                 key={m.id}
-                className="rounded-lg border border-black/10 dark:border-white/15 p-3 text-sm"
+                className="rounded-lg border border-white/15 p-3 text-sm"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="font-medium">
                     {m.homeTeam} {score(m)} {m.awayTeam}
                   </span>
-                  <span className="rounded-full bg-black/[.06] dark:bg-white/[.08] px-2 py-0.5 text-xs">
+                  <span className="rounded-full bg-white/10 px-2 py-0.5 text-xs">
                     {m.status || "—"}
                   </span>
                 </div>
-                <div className="mt-1 text-xs text-black/55 dark:text-white/55">
+                <div className="mt-1 text-xs text-white/55">
                   {[m.league, m.season, m.kickoffAt?.slice(0, 10), m.venue]
                     .filter(Boolean)
                     .join(" · ")}

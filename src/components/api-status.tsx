@@ -37,10 +37,10 @@ export function ApiStatus() {
         : "Checking API…";
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/15 px-3 py-1 text-sm">
+    <div className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-sm">
       <span className={`h-2 w-2 rounded-full ${dot}`} />
       <span>{label}</span>
-      <code className="text-xs text-black/50 dark:text-white/50">{API_URL}</code>
+      <code className="text-xs text-white/50">{API_URL}</code>
     </div>
   );
 }
