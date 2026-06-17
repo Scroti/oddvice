@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ApiStatus } from "@/components/api-status";
 import { InstallPrompt } from "@/components/pwa";
+import { MatchSearch } from "@/components/match-search";
 
 export default function Home() {
   return (
@@ -27,6 +28,8 @@ export default function Home() {
       </div>
 
       <ApiStatus />
+
+      <MatchSearch />
 
       <div className="w-full max-w-sm">
         <InstallPrompt />
