@@ -53,17 +53,25 @@ export async function getMatch(id: string): Promise<Match | null> {
   return res.json() as Promise<Match>;
 }
 
-/** Searches football matches via the Go API. Throws on non-2xx responses. */
-export async function searchMatches(
-  query: string,
-  signal?: AbortSignal,
-): Promise<MatchSearchResponse> {
-  const res = await fetch(
-    `${API_URL}/api/v1/football/matches/search?q=${encodeURIComponent(query)}`,
-    { signal, cache: "no-store" },
-  );
+async function fetchMatches(path: string): Promise<MatchSearchResponse> {
+  const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`API responded with ${res.status}`);
   return res.json() as Promise<MatchSearchResponse>;
+}
+
+/** All matches of the competition (e.g. the whole World Cup). */
+export function getMatches(): Promise<MatchSearchResponse> {
+  return fetchMatches(`/api/v1/football/matches`);
+}
+
+/** Upcoming (not yet played) matches, soonest first. */
+export function getUpcoming(): Promise<MatchSearchResponse> {
+  return fetchMatches(`/api/v1/football/matches/upcoming`);
+}
+
+/** Finished matches, most recent first. */
+export function getResults(): Promise<MatchSearchResponse> {
+  return fetchMatches(`/api/v1/football/matches/results`);
 }
 
 export type Article = {

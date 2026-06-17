@@ -1,13 +1,8 @@
 import Link from "next/link";
-import { NavIcon, type IconName } from "@/components/nav-config";
+import { getUpcoming, getResults, type Match } from "@/lib/api";
+import { MatchCard } from "@/components/match-card";
 
-const QUICK_LINKS: { href: string; title: string; desc: string; icon: IconName }[] =
-  [
-    { href: "/matches", title: "Meciuri", desc: "Rezultate și program", icon: "ball" },
-    { href: "/watch", title: "Watch", desc: "Unde se transmite", icon: "watch" },
-    { href: "/news", title: "Știri", desc: "Noutăți WC 2026", icon: "news" },
-    { href: "/bets", title: "Ponturi", desc: "Predicții și valoare", icon: "spark" },
-  ];
+export const dynamic = "force-dynamic";
 
 const SPORTS = [
   { key: "football", label: "Fotbal", active: true },
@@ -46,9 +41,22 @@ function SportIcon({ sport }: { sport: string }) {
   );
 }
 
-export default function Home() {
+async function safe(fn: () => Promise<{ matches: Match[] }>): Promise<Match[]> {
+  try {
+    return (await fn()).matches;
+  } catch {
+    return [];
+  }
+}
+
+export default async function Home() {
+  const [upcoming, results] = await Promise.all([
+    safe(getUpcoming),
+    safe(getResults),
+  ]);
+
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       {/* Sport categories */}
       <section className="grid grid-cols-3 gap-3">
         {SPORTS.map((s) => (
@@ -90,26 +98,37 @@ export default function Home() {
         </Link>
       </section>
 
-      {/* Quick links */}
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-3">
-        {QUICK_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/50 hover:bg-white/[0.04]"
-          >
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#C8F04A]/15 text-[#C8F04A]">
-              <NavIcon name={link.icon} size={20} />
-            </span>
-            <div>
-              <p className="font-display font-bold uppercase tracking-tight">
-                {link.title}
-              </p>
-              <p className="mt-0.5 text-xs text-white/50">{link.desc}</p>
-            </div>
-          </Link>
-        ))}
-      </section>
+      {upcoming.length > 0 && (
+        <MatchRow title="Urmează" matches={upcoming.slice(0, 8)} />
+      )}
+      {results.length > 0 && (
+        <MatchRow title="Rezultate" matches={results.slice(0, 8)} />
+      )}
     </div>
+  );
+}
+
+function MatchRow({ title, matches }: { title: string; matches: Match[] }) {
+  return (
+    <section>
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-display text-lg font-extrabold uppercase tracking-tight">
+          {title}
+        </h2>
+        <Link
+          href="/matches"
+          className="text-xs font-semibold text-[#C8F04A]"
+        >
+          Vezi toate →
+        </Link>
+      </div>
+      <div className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 lg:mx-0 lg:px-0">
+        {matches.map((m) => (
+          <div key={m.id} className="w-[280px] shrink-0">
+            <MatchCard match={m} />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
