@@ -1,6 +1,6 @@
 /* Oddvice service worker — offline caching + push notifications.
  * Versioned cache: bump CACHE_VERSION to invalidate old caches on deploy. */
-const CACHE_VERSION = "v3";
+const CACHE_VERSION = "v4";
 const CACHE_NAME = `oddvice-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline";
 
@@ -51,7 +51,10 @@ self.addEventListener("fetch", (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          caches
+            .open(CACHE_NAME)
+            .then((cache) => cache.put(request, copy))
+            .catch(() => {});
           return response;
         })
         .catch(async () => {
@@ -69,7 +72,10 @@ self.addEventListener("fetch", (event) => {
         .then((response) => {
           if (response && response.status === 200 && response.type === "basic") {
             const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+            caches
+              .open(CACHE_NAME)
+              .then((cache) => cache.put(request, copy))
+              .catch(() => {});
           }
           return response;
         })

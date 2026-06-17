@@ -1,30 +1,16 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TABS, isActive, NavIcon } from "./nav-config";
 
-/** Desktop-only left sidebar. Hidden below the `lg` breakpoint, where the
- * mobile BottomNav takes over. */
+/** Desktop-only left sidebar, sitting below the header. Hidden below the `lg`
+ * breakpoint, where the mobile BottomNav takes over. */
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 hidden w-64 flex-col border-r border-white/10 bg-[#020B0A] px-4 py-6 lg:flex">
-      <Link href="/" className="mb-8 flex items-center gap-3 px-2">
-        <Image
-          src="/icon.svg"
-          alt="Oddvice"
-          width={36}
-          height={36}
-          className="rounded-lg"
-          unoptimized
-          priority
-        />
-        <span className="text-lg font-semibold tracking-tight">Oddvice</span>
-      </Link>
-
+    <aside className="fixed bottom-0 left-0 top-14 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#020B0A] px-4 py-6 lg:flex">
       <nav className="flex flex-col gap-1">
         {TABS.map((tab) => {
           const active = isActive(pathname, tab.href);
