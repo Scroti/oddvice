@@ -8,7 +8,7 @@ export default function AppLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-dvh overflow-x-hidden bg-[#020B0A] text-white">
+    <div className="min-h-dvh overflow-x-clip bg-[#020B0A] text-white">
       <Header />
 
       {/* Desktop: left sidebar. Mobile: bottom bar. */}
