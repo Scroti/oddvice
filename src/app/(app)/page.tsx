@@ -36,7 +36,7 @@ export default function Home() {
           <Link
             key={link.href}
             href={link.href}
-            className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
+            className="group flex flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
           >
             <span className="grid h-10 w-10 place-items-center rounded-lg bg-[#37F06C]/15 text-[#37F06C]">
               <NavIcon name={link.icon} size={20} />

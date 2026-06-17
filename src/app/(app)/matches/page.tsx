@@ -6,7 +6,7 @@ export const metadata = { title: "Meciuri" };
 export default function MatchesPage() {
   return (
     <div>
-      <PageHeader title="Meciuri" subtitle="Caută un meci după nume." />
+      <PageHeader subtitle="Caută un meci după nume." />
       <MatchSearch />
     </div>
   );

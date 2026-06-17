@@ -48,9 +48,9 @@ export function MatchSearch() {
         <button
           type="submit"
           disabled={state.kind === "loading"}
-          className="rounded-md bg-[#37F06C] px-4 py-2 text-sm font-medium text-[#020B0A] hover:bg-[#5af588] disabled:opacity-50 transition-colors"
+          className="rounded-md bg-[#37F06C] px-4 py-2 text-sm font-bold uppercase tracking-wide text-[#020B0A] hover:bg-[#5af588] disabled:opacity-50 transition-colors"
         >
-          {state.kind === "loading" ? "Searching…" : "Search"}
+          {state.kind === "loading" ? "Caut…" : "Caută"}
         </button>
       </form>
 

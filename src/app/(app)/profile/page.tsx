@@ -7,7 +7,7 @@ export const metadata = { title: "Profil" };
 export default function ProfilePage() {
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title="Profil" subtitle="Cont și setări." />
+      <PageHeader subtitle="Cont și setări." />
 
       <ul className="divide-y divide-white/10 rounded-xl border border-white/10">
         {["Cont", "Notificări", "Preferințe", "Despre"].map((item) => (

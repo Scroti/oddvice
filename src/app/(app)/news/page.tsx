@@ -14,7 +14,7 @@ export default async function NewsPage() {
   } catch {
     return (
       <div>
-        <PageHeader title="Știri" subtitle="Noutăți despre Cupa Mondială 2026." />
+        <PageHeader subtitle="Noutăți despre Cupa Mondială 2026." />
         <p className="rounded-xl border border-white/10 p-6 text-sm text-white/60">
           Nu am putut încărca știrile momentan. Încearcă din nou mai târziu.
         </p>
@@ -24,7 +24,7 @@ export default async function NewsPage() {
 
   return (
     <div>
-      <PageHeader title="Știri" subtitle="Noutăți despre Cupa Mondială 2026." />
+      <PageHeader subtitle="Noutăți despre Cupa Mondială 2026." />
 
       {articles.length === 0 ? (
         <p className="text-sm text-white/60">Nicio știre disponibilă.</p>

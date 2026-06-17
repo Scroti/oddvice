@@ -1,18 +1,8 @@
-export function PageHeader({
-  title,
-  subtitle,
-}: {
-  title: string;
-  subtitle?: string;
-}) {
-  return (
-    <header className="mb-6">
-      <h1 className="font-display text-3xl font-extrabold uppercase tracking-tight">
-        {title}
-      </h1>
-      {subtitle && <p className="mt-1 text-sm text-white/55">{subtitle}</p>}
-    </header>
-  );
+/** The section title now lives in the sticky Header; pages only render an
+ * optional lead/subtitle here. */
+export function PageHeader({ subtitle }: { subtitle?: string }) {
+  if (!subtitle) return null;
+  return <p className="mb-6 text-sm text-white/55">{subtitle}</p>;
 }
 
 /** Styled empty state for sections that aren't built out yet. */

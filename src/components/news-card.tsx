@@ -10,7 +10,7 @@ export function NewsCard({ article }: { article: Article }) {
     <Link
       href={`/news/${article.id}`}
       prefetch={false}
-      className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
+      className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
     >
       <div className="mb-2 flex items-center gap-2 text-xs text-white/45">
         {article.source && (

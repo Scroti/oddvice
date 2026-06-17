@@ -21,7 +21,7 @@ export function Sidebar() {
               aria-current={active ? "page" : undefined}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors ${
                 active
-                  ? "bg-white/5 font-medium text-[#37F06C]"
+                  ? "bg-[#37F06C]/10 font-semibold text-[#37F06C] ring-1 ring-inset ring-[#37F06C]/20"
                   : "text-white/60 hover:bg-white/5 hover:text-white"
               }`}
             >
