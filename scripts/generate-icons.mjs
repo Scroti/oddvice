@@ -1,82 +1,42 @@
-// Generates solid-color PWA icons (PNG) with no external dependencies.
-// Run with: node scripts/generate-icons.mjs
-import { deflateSync } from "node:zlib";
-import { writeFileSync, mkdirSync } from "node:fs";
+// Rasterizes the Oddvice SVG logo into the PNG icons the PWA and the Flutter
+// app need. Run with: node scripts/generate-icons.mjs
+import sharp from "sharp";
+import { readFileSync, mkdirSync, copyFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUBLIC_DIR = join(__dirname, "..", "public");
+// Shared source for the Flutter launcher icon (best-effort copy).
+const MOBILE_ASSETS = join(__dirname, "..", "..", "mobile", "assets");
 
-// Brand color (generic placeholder — change freely).
-const BRAND = { r: 0x4f, g: 0x46, b: 0xe5 }; // indigo-600
+const rounded = readFileSync(join(PUBLIC_DIR, "icon.svg"));
+const fullBleed = readFileSync(join(PUBLIC_DIR, "icon-maskable.svg"));
+const foreground = readFileSync(join(PUBLIC_DIR, "icon-foreground.svg"));
 
-const crcTable = (() => {
-  const t = new Uint32Array(256);
-  for (let n = 0; n < 256; n++) {
-    let c = n;
-    for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
-    t[n] = c >>> 0;
-  }
-  return t;
-})();
-
-function crc32(buf) {
-  let c = 0xffffffff;
-  for (let i = 0; i < buf.length; i++) c = crcTable[(c ^ buf[i]) & 0xff] ^ (c >>> 8);
-  return (c ^ 0xffffffff) >>> 0;
+async function png(svg, size, outPath) {
+  await sharp(svg, { density: 384 })
+    .resize(size, size, { fit: "contain" })
+    .png()
+    .toFile(outPath);
+  console.log(`wrote ${outPath} (${size}x${size})`);
 }
 
-function chunk(type, data) {
-  const len = Buffer.alloc(4);
-  len.writeUInt32BE(data.length, 0);
-  const typeBuf = Buffer.from(type, "ascii");
-  const body = Buffer.concat([typeBuf, data]);
-  const crc = Buffer.alloc(4);
-  crc.writeUInt32BE(crc32(body), 0);
-  return Buffer.concat([len, body, crc]);
-}
+// PWA icons in public/.
+await png(rounded, 192, join(PUBLIC_DIR, "icon-192.png"));
+await png(rounded, 512, join(PUBLIC_DIR, "icon-512.png"));
+await png(fullBleed, 512, join(PUBLIC_DIR, "icon-maskable-512.png"));
+await png(fullBleed, 180, join(PUBLIC_DIR, "apple-touch-icon.png"));
 
-function makePng(size, { r, g, b }) {
-  const ihdr = Buffer.alloc(13);
-  ihdr.writeUInt32BE(size, 0);
-  ihdr.writeUInt32BE(size, 4);
-  ihdr[8] = 8; // bit depth
-  ihdr[9] = 6; // color type RGBA
-  ihdr[10] = 0; // compression
-  ihdr[11] = 0; // filter
-  ihdr[12] = 0; // interlace
+// 1024px master used as the Flutter launcher-icon source.
+const master = join(PUBLIC_DIR, "icon-1024.png");
+await png(fullBleed, 1024, master);
 
-  const rowLen = size * 4 + 1;
-  const raw = Buffer.alloc(rowLen * size);
-  for (let y = 0; y < size; y++) {
-    const off = y * rowLen;
-    raw[off] = 0; // filter: none
-    for (let x = 0; x < size; x++) {
-      const p = off + 1 + x * 4;
-      raw[p] = r;
-      raw[p + 1] = g;
-      raw[p + 2] = b;
-      raw[p + 3] = 255;
-    }
-  }
-
-  const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-  return Buffer.concat([
-    sig,
-    chunk("IHDR", ihdr),
-    chunk("IDAT", deflateSync(raw)),
-    chunk("IEND", Buffer.alloc(0)),
-  ]);
-}
-
-mkdirSync(PUBLIC_DIR, { recursive: true });
-const targets = [
-  ["icon-192.png", 192],
-  ["icon-512.png", 512],
-  ["apple-touch-icon.png", 180],
-];
-for (const [name, size] of targets) {
-  writeFileSync(join(PUBLIC_DIR, name), makePng(size, BRAND));
-  console.log(`wrote public/${name} (${size}x${size})`);
+// Copy assets the Flutter project consumes, if the sibling repo exists.
+if (existsSync(join(__dirname, "..", "..", "mobile"))) {
+  mkdirSync(MOBILE_ASSETS, { recursive: true });
+  copyFileSync(master, join(MOBILE_ASSETS, "icon-1024.png"));
+  await png(rounded, 512, join(MOBILE_ASSETS, "icon.png"));
+  await png(foreground, 1024, join(MOBILE_ASSETS, "icon-foreground.png"));
+  console.log("copied launcher source + assets into ../mobile/assets/");
 }
