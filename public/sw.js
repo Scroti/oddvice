@@ -1,6 +1,6 @@
 /* Oddvice service worker — offline caching + push notifications.
  * Versioned cache: bump CACHE_VERSION to invalidate old caches on deploy. */
-const CACHE_VERSION = "v2";
+const CACHE_VERSION = "v3";
 const CACHE_NAME = `oddvice-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline";
 
@@ -40,6 +40,10 @@ self.addEventListener("fetch", (event) => {
   // Cache API can't store and shouldn't cache here.
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // Don't intercept Next.js RSC/prefetch payloads — they're dynamic; let them
+  // hit the network directly (avoids double-fetching and caching stale data).
+  if (url.searchParams.has("_rsc")) return;
 
   // Navigations: network-first, fall back to cache, then the offline page.
   if (request.mode === "navigate") {
