@@ -14,7 +14,7 @@ export default function AppLayout({
       {/* Desktop: left sidebar. Mobile: bottom bar. */}
       <Sidebar />
 
-      <div className="lg:pl-64">
+      <div className="pt-14 lg:pl-64">
         <main className="mx-auto w-full max-w-md px-5 pt-6 pb-28 lg:max-w-5xl lg:px-10 lg:pt-10 lg:pb-12">
           {children}
         </main>

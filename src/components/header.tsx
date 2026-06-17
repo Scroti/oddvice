@@ -17,7 +17,7 @@ export function Header() {
   const title = currentTitle(pathname);
 
   return (
-    <header className="sticky top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-[#020B0A]/90 px-4 backdrop-blur lg:px-6">
+    <header className="fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-[#020B0A]/90 px-4 backdrop-blur lg:px-6">
       {title ? (
         <h1 className="font-display text-lg font-extrabold uppercase tracking-tight">
           {title}
