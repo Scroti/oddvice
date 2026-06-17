@@ -1,19 +1,18 @@
 // Shared navigation config used by both the mobile bottom bar and the
 // desktop sidebar. Add/rename tabs in one place.
 
-export type IconName = "home" | "ball" | "spark" | "news" | "user";
+export type IconName = "home" | "ball" | "watch" | "spark" | "news" | "user";
 
 export type Tab = {
   href: string;
   label: string;
   icon: IconName;
-  center?: boolean; // emphasised in the mobile bottom bar only
 };
 
 export const TABS: Tab[] = [
   { href: "/", label: "Acasă", icon: "home" },
   { href: "/matches", label: "Meciuri", icon: "ball" },
-  { href: "/bets", label: "Ponturi", icon: "spark", center: true },
+  { href: "/watch", label: "Watch", icon: "watch" },
   { href: "/news", label: "Știri", icon: "news" },
   { href: "/profile", label: "Profil", icon: "user" },
 ];
@@ -46,6 +45,14 @@ export function NavIcon({ name, size = 22 }: { name: IconName; size?: number }) 
         <svg {...props}>
           <circle cx="12" cy="12" r="9" />
           <path d="m12 7 4 3-1.5 5h-5L8 10z" />
+        </svg>
+      );
+    case "watch":
+      return (
+        <svg {...props}>
+          <rect x="3" y="4.5" width="18" height="12" rx="2" />
+          <path d="M8 20.5h8" />
+          <path d="m11 8.5 4 2-4 2z" />
         </svg>
       );
     case "spark":

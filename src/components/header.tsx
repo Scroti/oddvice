@@ -11,19 +11,15 @@ function currentTitle(pathname: string): string | null {
   return tab ? tab.label : null;
 }
 
-/** Sticky top bar: page title (or brand on Home) on the left, actions right. */
+/** Fixed top bar: logo + (page title or brand) on the left, actions right. */
 export function Header() {
   const pathname = usePathname();
   const title = currentTitle(pathname);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-[#020B0A]/90 px-4 backdrop-blur lg:px-6">
-      {title ? (
-        <h1 className="font-display text-lg font-extrabold uppercase tracking-tight">
-          {title}
-        </h1>
-      ) : (
-        <Link href="/" className="flex items-center gap-2.5">
+      <div className="flex items-center gap-2.5">
+        <Link href="/" aria-label="Acasă" className="shrink-0">
           <Image
             src="/icon.svg"
             alt="Oddvice"
@@ -33,11 +29,11 @@ export function Header() {
             unoptimized
             priority
           />
-          <span className="font-display text-lg font-extrabold uppercase tracking-tight">
-            Oddvice
-          </span>
         </Link>
-      )}
+        <span className="font-display text-lg font-extrabold uppercase tracking-tight">
+          {title ?? "Oddvice"}
+        </span>
+      </div>
 
       <div className="flex items-center gap-2">
         <span className="mr-1 hidden rounded-full border border-[#C8F04A]/30 bg-[#C8F04A]/10 px-2.5 py-1 text-xs font-semibold text-[#C8F04A] sm:inline">

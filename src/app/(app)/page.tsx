@@ -4,6 +4,7 @@ import { NavIcon, type IconName } from "@/components/nav-config";
 const QUICK_LINKS: { href: string; title: string; desc: string; icon: IconName }[] =
   [
     { href: "/matches", title: "Meciuri", desc: "Rezultate și program", icon: "ball" },
+    { href: "/watch", title: "Watch", desc: "Unde se transmite", icon: "watch" },
     { href: "/news", title: "Știri", desc: "Noutăți WC 2026", icon: "news" },
     { href: "/bets", title: "Ponturi", desc: "Predicții și valoare", icon: "spark" },
   ];

@@ -3,7 +3,7 @@
   <rect width="1024" height="1024" fill="#020B0A"/>
   <!-- Mark kept within the central safe zone. -->
   <g transform="translate(512 512) scale(1.25)">
-    <circle cx="0" cy="0" r="154" stroke="#37F06C" stroke-width="78" stroke-linecap="butt"
+    <circle cx="0" cy="0" r="154" stroke="#C8F04A" stroke-width="78" stroke-linecap="butt"
       stroke-dasharray="350 62 236 64" transform="rotate(-36)"/>
   </g>
 </svg>
