@@ -9,51 +9,28 @@ export function NewsCard({ article }: { article: Article }) {
   return (
     <Link
       href={`/news/${article.id}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-white/[0.02] transition-colors hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
+      className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-[#37F06C]/50 hover:bg-white/[0.04]"
     >
-      {/* Visual banner: publisher logo centered on a brand-tinted gradient. */}
-      <div className="flex h-28 items-center justify-center bg-gradient-to-br from-white/[0.05] to-[#37F06C]/10">
-        {article.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={article.image}
-            alt={article.source}
-            width={64}
-            height={64}
-            loading="lazy"
-            className="h-14 w-14 rounded-xl bg-white/90 object-contain p-1.5 shadow-md"
-          />
-        ) : (
-          <span className="text-2xl font-semibold text-white/40">
-            {article.source.slice(0, 1) || "?"}
+      <div className="mb-2 flex items-center gap-2 text-xs text-white/45">
+        {article.source && (
+          <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
+            {article.source}
           </span>
         )}
+        {date && <span>{date}</span>}
       </div>
 
-      <div className="flex flex-1 flex-col p-4">
-        <div className="mb-2 flex items-center gap-2 text-xs text-white/45">
-          {article.source && (
-            <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
-              {article.source}
-            </span>
-          )}
-          {date && <span>{date}</span>}
-        </div>
+      <h3 className="line-clamp-3 font-medium leading-snug transition-colors group-hover:text-white">
+        {title}
+      </h3>
 
-        <h3 className="line-clamp-3 font-medium leading-snug transition-colors group-hover:text-white">
-          {title}
-        </h3>
+      {article.summary && (
+        <p className="mt-2 line-clamp-2 text-sm text-white/55">
+          {article.summary}
+        </p>
+      )}
 
-        {article.summary && (
-          <p className="mt-2 line-clamp-2 text-sm text-white/55">
-            {article.summary}
-          </p>
-        )}
-
-        <span className="mt-3 text-xs font-medium text-[#37F06C]">
-          Citește →
-        </span>
-      </div>
+      <span className="mt-3 text-xs font-medium text-[#37F06C]">Citește →</span>
     </Link>
   );
 }

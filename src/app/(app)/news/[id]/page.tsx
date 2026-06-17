@@ -36,25 +36,13 @@ export default async function ArticlePage({
     <article className="flex flex-col gap-5">
       <BackLink />
 
-      <div className="flex items-center gap-3 text-xs text-white/50">
-        {article.image && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={article.image}
-            alt={article.source}
-            width={40}
-            height={40}
-            className="h-10 w-10 rounded-lg bg-white/90 object-contain p-1"
-          />
+      <div className="flex items-center gap-2 text-xs text-white/50">
+        {article.source && (
+          <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
+            {article.source}
+          </span>
         )}
-        <div className="flex items-center gap-2">
-          {article.source && (
-            <span className="rounded-full bg-[#37F06C]/15 px-2 py-0.5 font-medium text-[#37F06C]">
-              {article.source}
-            </span>
-          )}
-          {date && <span>{date}</span>}
-        </div>
+        {date && <span>{date}</span>}
       </div>
 
       <h1 className="text-2xl font-semibold leading-tight">{title}</h1>

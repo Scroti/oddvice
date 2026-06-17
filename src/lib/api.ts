@@ -57,7 +57,6 @@ export type Article = {
   title: string;
   link: string;
   source: string;
-  image: string;
   summary: string;
   publishedAt: string | null;
 };
@@ -67,21 +66,18 @@ export type NewsResponse = {
   articles: Article[];
 };
 
-/** Fetches the latest news. Cached for 5 minutes on the server. */
+/** Fetches the latest news from the API (always fresh). */
 export async function getNews(): Promise<NewsResponse> {
-  const res = await fetch(`${API_URL}/api/v1/news`, {
-    next: { revalidate: 300 },
-  });
+  const res = await fetch(`${API_URL}/api/v1/news`, { cache: "no-store" });
   if (!res.ok) throw new Error(`API responded with ${res.status}`);
   return res.json() as Promise<NewsResponse>;
 }
 
 /** Fetches a single article by id. Returns null on 404. */
 export async function getArticle(id: string): Promise<Article | null> {
-  const res = await fetch(
-    `${API_URL}/api/v1/news/${encodeURIComponent(id)}`,
-    { next: { revalidate: 300 } },
-  );
+  const res = await fetch(`${API_URL}/api/v1/news/${encodeURIComponent(id)}`, {
+    cache: "no-store",
+  });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API responded with ${res.status}`);
   return res.json() as Promise<Article>;
