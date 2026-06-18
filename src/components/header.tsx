@@ -3,25 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { TABS, isActive } from "./nav-config";
 
-// Sections reachable outside the bottom-nav tabs (e.g. Profil via the header).
-const EXTRA_TITLES: Record<string, string> = { "/profile": "Profil" };
-
-/** Title of the current section (null on Home, where we show the brand). */
-function currentTitle(pathname: string): string | null {
+/** i18n key (under "nav") for the current section, or null on Home. */
+function currentTitleKey(pathname: string): string | null {
   const tab = TABS.find((t) => t.href !== "/" && isActive(pathname, t.href));
-  if (tab) return tab.label;
-  for (const [href, label] of Object.entries(EXTRA_TITLES)) {
-    if (isActive(pathname, href)) return label;
-  }
+  if (tab) return tab.key;
+  if (isActive(pathname, "/profile")) return "profile";
   return null;
 }
 
 /** Fixed top bar: logo + (page title or brand) on the left, actions right. */
 export function Header() {
   const pathname = usePathname();
-  const title = currentTitle(pathname);
+  const t = useTranslations("nav");
+  const titleKey = currentTitleKey(pathname);
+  const title = titleKey ? t(titleKey) : null;
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex h-14 items-center justify-between border-b border-white/10 bg-[#020B0A]/90 px-4 backdrop-blur lg:px-6">
@@ -43,10 +41,6 @@ export function Header() {
       </div>
 
       <div className="flex items-center gap-2">
-        <span className="mr-1 hidden rounded-full border border-[#C8F04A]/30 bg-[#C8F04A]/10 px-2.5 py-1 text-xs font-semibold text-[#C8F04A] sm:inline">
-          WC 2026
-        </span>
-
         <button
           type="button"
           aria-label="Notificări"

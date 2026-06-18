@@ -1,0 +1,18 @@
+{
+  "nav": { "home": "Start", "matches": "Spiele", "bets": "Tipps", "watch": "Watch", "news": "News", "profile": "Profil" },
+  "common": { "seeAll": "Alle ansehen", "read": "Lesen", "soon": "Demnächst", "retry": "Erneut versuchen", "ft": "Ende", "vs": "VS", "live": "Live" },
+  "home": { "pickOfDay": "Tipp des Tages", "heroTitle": "Tipps zur WM 2026", "heroSubtitle": "Analysen, Prognosen und Value — täglich aktualisiert.", "viewTips": "Tipps ansehen", "standings": "Tabellen", "upcoming": "Demnächst", "results": "Ergebnisse" },
+  "sports": { "football": "Fußball", "basketball": "Basketball", "tennis": "Tennis" },
+  "matches": { "subtitle": "Alle Spiele der WM 2026.", "couldntLoad": "Spiele konnten nicht geladen werden. Versuche es erneut.", "none": "Keine Spiele gefunden.", "byDate": "Nach Datum", "byGroup": "Nach Gruppe" },
+  "matchDetail": { "back": "Zurück zu den Spielen", "details": "Details", "competition": "Wettbewerb", "date": "Datum", "stadium": "Stadion", "status": "Status", "whereToWatch": "Wo zu sehen", "notFound": "Spiel nicht gefunden." },
+  "standings": { "title": "Tabellen", "pos": "#", "team": "Team", "played": "Sp", "gd": "TD", "points": "Pkt", "forGroup": "Tabelle · {group}" },
+  "watch": { "subtitle": "Sieh, wo du die kommenden Spiele sehen kannst.", "fifaDesc": "Offizielle Live-Streams (in vielen Ländern kostenlos)", "upcoming": "Demnächst", "whereToWatch": "Wo zu sehen", "note": "„Wo zu sehen“ öffnet die offizielle Suche für jedes Spiel (YouTube ist die bevorzugte Plattform der WM 2026). Übertragungen variieren je nach Region.", "none": "Derzeit keine Spiele angesetzt." },
+  "news": { "subtitle": "WM-2026-News.", "couldntLoad": "News konnten gerade nicht geladen werden. Versuche es später erneut.", "noNews": "Keine News verfügbar.", "notFound": "Artikel nicht gefunden oder nicht mehr verfügbar.", "back": "Zurück zu den News", "readOnSite": "Auf der Seite lesen", "redirect": "Du wirst zu {source} weitergeleitet.", "source": "der Originalquelle" },
+  "bets": { "subtitle": "Prognosen und Wetttipps zu den Spielen.", "comingSoon": "Hier erscheinen die Tipps des Tages mit Quoten und Sicherheitsgrad." },
+  "profile": { "subtitle": "Konto und Einstellungen.", "account": "Konto", "notifications": "Benachrichtigungen", "preferences": "Einstellungen", "language": "Sprache", "about": "Über", "rgTitle": "Verantwortungsvolles Spielen", "rgText": "Oddvice bietet nur Informationen und Analysen — es nimmt keine Wetten an und garantiert keine Gewinne. Setze nur, was du dir leisten kannst zu verlieren.", "rgHelp": "Brauchst du Hilfe?", "rgHelpUrl": "https://www.begambleaware.org", "serverStatus": "Serverstatus" },
+  "pwa": { "installTitle": "Oddvice installieren", "addToHome": "Zum Startbildschirm hinzufügen", "iosHint": "Tippe auf Teilen und dann „Zum Startbildschirm“.", "browserHint": "Nutze das Browsermenü, um die App zu installieren." },
+  "apiStatus": { "online": "API online", "offline": "API nicht erreichbar", "checking": "API wird geprüft…" },
+  "footer": { "disclaimer": "18+ · Spiele verantwortungsvoll. Tipps sind nur Informationen und garantieren keine Gewinne.", "help": "Brauchst du Hilfe?", "helpUrl": "https://www.begambleaware.org" },
+  "stage": { "group": "Gruppe {letter}", "groupStage": "Gruppenphase", "r16": "Achtelfinale", "qf": "Viertelfinale", "sf": "Halbfinale", "third": "Spiel um Platz 3", "final": "Finale" },
+  "comingSoon": "Demnächst"
+}

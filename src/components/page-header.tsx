@@ -1,5 +1,7 @@
-/** The section title now lives in the sticky Header; pages only render an
- * optional lead/subtitle here. */
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export function PageHeader({ subtitle }: { subtitle?: string }) {
   if (!subtitle) return null;
   return <p className="mb-6 text-sm text-white/55">{subtitle}</p>;
@@ -7,6 +9,7 @@ export function PageHeader({ subtitle }: { subtitle?: string }) {
 
 /** Styled empty state for sections that aren't built out yet. */
 export function ComingSoon({ note }: { note: string }) {
+  const t = useTranslations();
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
       <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-[#C8F04A]/15 text-[#C8F04A]">
@@ -25,7 +28,7 @@ export function ComingSoon({ note }: { note: string }) {
       </div>
       <p className="text-sm text-white/70">{note}</p>
       <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-white/35">
-        În curând
+        {t("comingSoon")}
       </p>
     </div>
   );

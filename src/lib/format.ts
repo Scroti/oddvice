@@ -1,10 +1,10 @@
-const dateFmt = new Intl.DateTimeFormat("ro-RO", {
+const dateFmt = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
   month: "short",
   year: "numeric",
 });
 
-/** Formats an ISO date string to e.g. "17 iun. 2026". Empty string if absent. */
+/** Formats an ISO date string to e.g. "17 Jun 2026". Empty string if absent. */
 export function formatDate(iso: string | null): string {
   if (!iso) return "";
   const d = new Date(iso);

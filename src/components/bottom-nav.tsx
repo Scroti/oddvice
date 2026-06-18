@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { TABS, isActive, NavIcon } from "./nav-config";
 
 /** Mobile-only bottom navigation (flat, modern). Hidden from `lg` up, where the
  * sidebar takes over. Active tab gets a lime pill behind its icon. */
 export function BottomNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-[#020B0A]/90 backdrop-blur lg:hidden">
@@ -33,7 +35,7 @@ export function BottomNav() {
                     active ? "font-semibold text-[#C8F04A]" : "text-white/55"
                   }`}
                 >
-                  {tab.label}
+                  {t(tab.key)}
                 </span>
               </Link>
             </li>

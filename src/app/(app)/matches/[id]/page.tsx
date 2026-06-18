@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getMatch, getStandings, type Match, type Group } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { localizeStage } from "@/lib/stage";
 import { StandingsTable } from "@/components/standings-table";
 import { watchUrl } from "@/components/watch-card";
 
@@ -10,20 +12,15 @@ function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
 }
 
-function statusLabel(status: string, played: boolean): string {
-  const s = status.toLowerCase();
-  if (s === "ft" || s.includes("finished")) return "Final";
-  if (s === "ns" || s.includes("not started")) return "Urmează";
-  if (s.includes("postponed")) return "Amânat";
-  return played ? "Final" : status || "Urmează";
-}
-
 export default async function MatchDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const t = await getTranslations();
+  const ls = (name: string) =>
+    localizeStage(name, (k, v) => t(`stage.${k}`, v));
 
   let match: Match | null = null;
   try {
@@ -34,7 +31,7 @@ export default async function MatchDetailPage({
 
   // For group-stage matches, also load the group's standings table.
   let group: Group | null = null;
-  if (match && match.league.startsWith("Grupa")) {
+  if (match && match.league.startsWith("Group")) {
     try {
       const { groups } = await getStandings();
       group = groups.find((g) => g.name === match!.league) ?? null;
@@ -46,9 +43,9 @@ export default async function MatchDetailPage({
   if (!match) {
     return (
       <div className="flex flex-col gap-4">
-        <BackLink />
+        <BackLink label={t("matchDetail.back")} />
         <p className="rounded-xl border border-white/10 p-6 text-sm text-white/60">
-          Meciul nu a fost găsit.
+          {t("matchDetail.notFound")}
         </p>
       </div>
     );
@@ -56,15 +53,21 @@ export default async function MatchDetailPage({
 
   const played = match.homeScore != null && match.awayScore != null;
   const date = formatDate(match.kickoffAt);
+  const statusText =
+    match.status === "LIVE"
+      ? t("common.live")
+      : match.status === "FT" || played
+        ? t("common.ft")
+        : t("home.upcoming");
 
   return (
     <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
-      <BackLink />
+      <BackLink label={t("matchDetail.back")} />
 
       {/* Scoreboard */}
       <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
         <p className="text-center text-xs font-bold uppercase tracking-widest text-white/40">
-          {match.league}
+          {ls(match.league)}
         </p>
         {date && (
           <p className="mt-1 text-center text-xs text-white/40">{date}</p>
@@ -83,7 +86,7 @@ export default async function MatchDetailPage({
               </span>
             </div>
             <span className="rounded-full border border-[#C8F04A]/40 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-[#C8F04A]">
-              {statusLabel(match.status, played)}
+              {statusText}
             </span>
           </div>
 
@@ -96,7 +99,7 @@ export default async function MatchDetailPage({
           rel="noopener noreferrer"
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
         >
-          Unde se transmite ↗
+          {t("matchDetail.whereToWatch")} ↗
         </a>
       </section>
 
@@ -104,7 +107,7 @@ export default async function MatchDetailPage({
       {group && (
         <section>
           <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
-            Clasament · {group.name}
+            {t("standings.forGroup", { group: ls(group.name) })}
           </h2>
           <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
             <StandingsTable group={group} />
@@ -115,16 +118,17 @@ export default async function MatchDetailPage({
       {/* Details */}
       <section>
         <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
-          Detalii
+          {t("matchDetail.details")}
         </h2>
         <div className="overflow-hidden rounded-2xl border border-white/10">
-          <InfoRow label="Competiție" value={match.league} />
-          {date && <InfoRow label="Dată" value={date} />}
-          {match.venue && <InfoRow label="Stadion" value={match.venue} />}
-          <InfoRow label="Status" value={statusLabel(match.status, played)} />
+          <InfoRow label={t("matchDetail.competition")} value={ls(match.league)} />
+          {date && <InfoRow label={t("matchDetail.date")} value={date} />}
+          {match.venue && (
+            <InfoRow label={t("matchDetail.stadium")} value={match.venue} />
+          )}
+          <InfoRow label={t("matchDetail.status")} value={statusText} />
         </div>
       </section>
-
     </div>
   );
 }
@@ -161,13 +165,13 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function BackLink() {
+function BackLink({ label }: { label: string }) {
   return (
     <Link
       href="/matches"
       className="inline-flex w-fit items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
     >
-      ← Înapoi la meciuri
+      ← {label}
     </Link>
   );
 }

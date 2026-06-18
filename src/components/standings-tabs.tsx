@@ -25,7 +25,7 @@ export function StandingsTabs({ groups }: { groups: Group[] }) {
                 : "border border-white/15 text-white/55 hover:text-white"
             }`}
           >
-            {g.name.replace("Grupa ", "")}
+            {g.name.replace("Group ", "")}
           </button>
         ))}
       </div>

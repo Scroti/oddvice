@@ -5,16 +5,16 @@ export type IconName = "home" | "ball" | "watch" | "spark" | "news" | "user";
 
 export type Tab = {
   href: string;
-  label: string;
+  key: string; // i18n key under the "nav" namespace
   icon: IconName;
 };
 
 export const TABS: Tab[] = [
-  { href: "/", label: "Acasă", icon: "home" },
-  { href: "/matches", label: "Meciuri", icon: "ball" },
-  { href: "/bets", label: "Ponturi", icon: "spark" },
-  { href: "/watch", label: "Watch", icon: "watch" },
-  { href: "/news", label: "Știri", icon: "news" },
+  { href: "/", key: "home", icon: "home" },
+  { href: "/matches", key: "matches", icon: "ball" },
+  { href: "/bets", key: "bets", icon: "spark" },
+  { href: "/watch", key: "watch", icon: "watch" },
+  { href: "/news", key: "news", icon: "news" },
 ];
 
 export function isActive(pathname: string, href: string): boolean {

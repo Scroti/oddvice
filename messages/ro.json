@@ -1,0 +1,18 @@
+{
+  "nav": { "home": "Acasă", "matches": "Meciuri", "bets": "Ponturi", "watch": "Watch", "news": "Știri", "profile": "Profil" },
+  "common": { "seeAll": "Vezi toate", "read": "Citește", "soon": "Curând", "retry": "Încearcă din nou", "ft": "FT", "vs": "VS", "live": "Live" },
+  "home": { "pickOfDay": "Pontul zilei", "heroTitle": "Ponturi pentru Cupa Mondială 2026", "heroSubtitle": "Analize, predicții și valoare — actualizate zilnic.", "viewTips": "Vezi ponturile", "standings": "Clasamente", "upcoming": "Urmează", "results": "Rezultate" },
+  "sports": { "football": "Fotbal", "basketball": "Baschet", "tennis": "Tenis" },
+  "matches": { "subtitle": "Toate meciurile Cupei Mondiale 2026.", "couldntLoad": "Nu am putut încărca meciurile. Încearcă din nou.", "none": "Niciun meci găsit.", "byDate": "După dată", "byGroup": "Pe grupe" },
+  "matchDetail": { "back": "Înapoi la meciuri", "details": "Detalii", "competition": "Competiție", "date": "Dată", "stadium": "Stadion", "status": "Status", "whereToWatch": "Unde se transmite", "notFound": "Meciul nu a fost găsit." },
+  "standings": { "title": "Clasamente", "pos": "#", "team": "Echipă", "played": "J", "gd": "GD", "points": "Pct", "forGroup": "Clasament · {group}" },
+  "watch": { "subtitle": "Vezi unde poți urmări meciurile care urmează.", "fifaDesc": "Transmisiuni live oficiale (gratuit în multe țări)", "upcoming": "Urmează", "whereToWatch": "Unde se transmite", "note": "„Unde se transmite” deschide căutarea oficială pentru fiecare meci (YouTube e platforma preferată WC 2026). Transmisiunile diferă în funcție de regiune.", "none": "Niciun meci programat momentan." },
+  "news": { "subtitle": "Noutăți despre Cupa Mondială 2026.", "couldntLoad": "Nu am putut încărca știrile momentan. Încearcă din nou mai târziu.", "noNews": "Nicio știre disponibilă.", "notFound": "Articolul nu a fost găsit sau nu mai este disponibil.", "back": "Înapoi la știri", "readOnSite": "Citește pe site", "redirect": "Vei fi redirecționat către {source}.", "source": "sursa originală" },
+  "bets": { "subtitle": "Predicții și sfaturi de pariere pe meciuri.", "comingSoon": "Aici vor apărea ponturile zilei, cu cote și nivel de încredere." },
+  "profile": { "subtitle": "Cont și setări.", "account": "Cont", "notifications": "Notificări", "preferences": "Preferințe", "language": "Limbă", "about": "Despre", "rgTitle": "Joc responsabil", "rgText": "Oddvice oferă doar informații și analize — nu acceptă pariuri și nu garantează câștiguri. Pariază doar ce îți permiți să pierzi.", "rgHelp": "Ai nevoie de ajutor?", "rgHelpUrl": "https://www.jocresponsabil.ro", "serverStatus": "Stare server" },
+  "pwa": { "installTitle": "Instalează Oddvice", "addToHome": "Adaugă pe ecranul principal", "iosHint": "Apasă butonul Share, apoi Adaugă pe ecranul principal.", "browserHint": "Folosește meniul browserului pentru a instala aplicația." },
+  "apiStatus": { "online": "API online", "offline": "API indisponibil", "checking": "Verific API…" },
+  "footer": { "disclaimer": "18+ · Joacă responsabil. Ponturile sunt informative și nu garantează câștiguri.", "help": "Ai nevoie de ajutor?", "helpUrl": "https://www.jocresponsabil.ro" },
+  "stage": { "group": "Grupa {letter}", "groupStage": "Faza grupelor", "r16": "Optimi", "qf": "Sferturi", "sf": "Semifinale", "third": "Finala mică", "final": "Finală" },
+  "comingSoon": "În curând"
+}

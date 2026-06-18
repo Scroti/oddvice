@@ -1,0 +1,18 @@
+{
+  "nav": { "home": "Accueil", "matches": "Matchs", "bets": "Pronos", "watch": "Watch", "news": "Actus", "profile": "Profil" },
+  "common": { "seeAll": "Voir tout", "read": "Lire", "soon": "Bientôt", "retry": "Réessayer", "ft": "FIN", "vs": "VS", "live": "Live" },
+  "home": { "pickOfDay": "Prono du jour", "heroTitle": "Pronos pour la Coupe du Monde 2026", "heroSubtitle": "Analyses, prédictions et value — mis à jour chaque jour.", "viewTips": "Voir les pronos", "standings": "Classements", "upcoming": "À venir", "results": "Résultats" },
+  "sports": { "football": "Football", "basketball": "Basket", "tennis": "Tennis" },
+  "matches": { "subtitle": "Tous les matchs de la Coupe du Monde 2026.", "couldntLoad": "Impossible de charger les matchs. Réessaie.", "none": "Aucun match trouvé.", "byDate": "Par date", "byGroup": "Par groupe" },
+  "matchDetail": { "back": "Retour aux matchs", "details": "Détails", "competition": "Compétition", "date": "Date", "stadium": "Stade", "status": "Statut", "whereToWatch": "Où regarder", "notFound": "Match introuvable." },
+  "standings": { "title": "Classements", "pos": "#", "team": "Équipe", "played": "J", "gd": "Diff", "points": "Pts", "forGroup": "Classement · {group}" },
+  "watch": { "subtitle": "Découvre où regarder les prochains matchs.", "fifaDesc": "Diffusions live officielles (gratuit dans de nombreux pays)", "upcoming": "À venir", "whereToWatch": "Où regarder", "note": "« Où regarder » ouvre la recherche officielle pour chaque match (YouTube est la plateforme privilégiée de la Coupe du Monde 2026). Les diffusions varient selon la région.", "none": "Aucun match programmé pour le moment." },
+  "news": { "subtitle": "Actus de la Coupe du Monde 2026.", "couldntLoad": "Impossible de charger les actus pour le moment. Réessaie plus tard.", "noNews": "Aucune actu disponible.", "notFound": "Article introuvable ou plus disponible.", "back": "Retour aux actus", "readOnSite": "Lire sur le site", "redirect": "Tu seras redirigé vers {source}.", "source": "la source d'origine" },
+  "bets": { "subtitle": "Prédictions et conseils de paris sur les matchs.", "comingSoon": "Les pronos du jour, avec cotes et niveau de confiance, apparaîtront ici." },
+  "profile": { "subtitle": "Compte et paramètres.", "account": "Compte", "notifications": "Notifications", "preferences": "Préférences", "language": "Langue", "about": "À propos", "rgTitle": "Jeu responsable", "rgText": "Oddvice fournit uniquement des informations et des analyses — il n'accepte pas de paris et ne garantit aucun gain. Ne pariez que ce que vous pouvez vous permettre de perdre.", "rgHelp": "Besoin d'aide ?", "rgHelpUrl": "https://www.begambleaware.org", "serverStatus": "État du serveur" },
+  "pwa": { "installTitle": "Installer Oddvice", "addToHome": "Ajouter à l'écran d'accueil", "iosHint": "Touche le bouton Partager, puis « Ajouter à l'écran d'accueil ».", "browserHint": "Utilise le menu du navigateur pour installer l'app." },
+  "apiStatus": { "online": "API en ligne", "offline": "API injoignable", "checking": "Vérification de l'API…" },
+  "footer": { "disclaimer": "18+ · Jouez responsable. Les pronos sont informatifs et ne garantissent aucun gain.", "help": "Besoin d'aide ?", "helpUrl": "https://www.begambleaware.org" },
+  "stage": { "group": "Groupe {letter}", "groupStage": "Phase de groupes", "r16": "Huitièmes", "qf": "Quarts", "sf": "Demi-finales", "third": "Match pour la 3e place", "final": "Finale" },
+  "comingSoon": "Bientôt"
+}

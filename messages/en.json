@@ -1,0 +1,18 @@
+{
+  "nav": { "home": "Home", "matches": "Matches", "bets": "Tips", "watch": "Watch", "news": "News", "profile": "Profile" },
+  "common": { "seeAll": "See all", "read": "Read", "soon": "Soon", "retry": "Try again", "ft": "FT", "vs": "VS", "live": "Live" },
+  "home": { "pickOfDay": "Tip of the day", "heroTitle": "Tips for the 2026 World Cup", "heroSubtitle": "Analysis, predictions and value — updated daily.", "viewTips": "View tips", "standings": "Standings", "upcoming": "Upcoming", "results": "Results" },
+  "sports": { "football": "Football", "basketball": "Basketball", "tennis": "Tennis" },
+  "matches": { "subtitle": "All 2026 World Cup matches.", "couldntLoad": "Couldn't load the matches. Try again.", "none": "No matches found.", "byDate": "By date", "byGroup": "By group" },
+  "matchDetail": { "back": "Back to matches", "details": "Details", "competition": "Competition", "date": "Date", "stadium": "Stadium", "status": "Status", "whereToWatch": "Where to watch", "notFound": "Match not found." },
+  "standings": { "title": "Standings", "pos": "#", "team": "Team", "played": "P", "gd": "GD", "points": "Pts", "forGroup": "Standings · {group}" },
+  "watch": { "subtitle": "See where to watch the upcoming matches.", "fifaDesc": "Official live streams (free in many countries)", "upcoming": "Upcoming", "whereToWatch": "Where to watch", "note": "\"Where to watch\" opens the official search for each match (YouTube is the 2026 World Cup preferred platform). Broadcasts vary by region.", "none": "No matches scheduled right now." },
+  "news": { "subtitle": "2026 World Cup news.", "couldntLoad": "Couldn't load the news right now. Try again later.", "noNews": "No news available.", "notFound": "Article not found or no longer available.", "back": "Back to news", "readOnSite": "Read on site", "redirect": "You'll be redirected to {source}.", "source": "the original source" },
+  "bets": { "subtitle": "Predictions and betting tips for matches.", "comingSoon": "Daily tips with odds and a confidence level will appear here." },
+  "profile": { "subtitle": "Account and settings.", "account": "Account", "notifications": "Notifications", "preferences": "Preferences", "language": "Language", "about": "About", "rgTitle": "Responsible gambling", "rgText": "Oddvice only provides information and analysis — it does not accept bets and does not guarantee winnings. Only bet what you can afford to lose.", "rgHelp": "Need help?", "rgHelpUrl": "https://www.begambleaware.org", "serverStatus": "Server status" },
+  "pwa": { "installTitle": "Install Oddvice", "addToHome": "Add to Home Screen", "iosHint": "Tap the Share button, then Add to Home Screen.", "browserHint": "Use your browser menu to install the app." },
+  "apiStatus": { "online": "API online", "offline": "API unreachable", "checking": "Checking API…" },
+  "footer": { "disclaimer": "18+ · Play responsibly. Tips are informational and don't guarantee winnings.", "help": "Need help?", "helpUrl": "https://www.begambleaware.org" },
+  "stage": { "group": "Group {letter}", "groupStage": "Group stage", "r16": "Round of 16", "qf": "Quarter-finals", "sf": "Semi-finals", "third": "Third place", "final": "Final" },
+  "comingSoon": "Coming soon"
+}

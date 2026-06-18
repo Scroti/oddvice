@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 /** Registers the service worker once the page has loaded. */
 export function ServiceWorkerRegistrar() {
@@ -23,6 +24,7 @@ export function ServiceWorkerRegistrar() {
  * one-tap install button; on iOS Safari it shows manual A2HS instructions.
  */
 export function InstallPrompt() {
+  const t = useTranslations("pwa");
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
   const [deferred, setDeferred] = useState<Event | null>(null);
@@ -54,24 +56,18 @@ export function InstallPrompt() {
 
   return (
     <div className="rounded-lg border border-white/15 p-4 text-sm">
-      <h3 className="font-medium mb-2">Instalează Oddvice</h3>
+      <h3 className="font-medium mb-2">{t("installTitle")}</h3>
       {deferred ? (
         <button
           onClick={install}
           className="rounded-md bg-[#C8F04A] px-3 py-1.5 font-medium text-[#020B0A] hover:bg-[#D8FB6A] transition-colors"
         >
-          Add to Home Screen
+          {t("addToHome")}
         </button>
       ) : isIOS ? (
-        <p className="text-white/70">
-          Apasă butonul Share{" "}
-          <span aria-label="share">⎋</span> apoi{" "}
-          <strong>Add to Home Screen</strong>.
-        </p>
+        <p className="text-white/70">{t("iosHint")}</p>
       ) : (
-        <p className="text-white/70">
-          Folosește meniul browserului pentru a instala aplicația.
-        </p>
+        <p className="text-white/70">{t("browserHint")}</p>
       )}
     </div>
   );

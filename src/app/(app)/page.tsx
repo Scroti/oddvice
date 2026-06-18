@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import {
   getUpcoming,
   getResults,
@@ -12,9 +13,9 @@ import { StandingsTabs } from "@/components/standings-tabs";
 export const dynamic = "force-dynamic";
 
 const SPORTS = [
-  { key: "football", label: "Fotbal", active: true },
-  { key: "basketball", label: "Baschet", active: false },
-  { key: "tennis", label: "Tenis", active: false },
+  { key: "football", active: true },
+  { key: "basketball", active: false },
+  { key: "tennis", active: false },
 ] as const;
 
 function SportIcon({ sport }: { sport: string }) {
@@ -65,6 +66,7 @@ async function safeGroups(): Promise<Group[]> {
 }
 
 export default async function Home() {
+  const t = await getTranslations();
   const [upcoming, results, groups] = await Promise.all([
     safe(getUpcoming),
     safe(getResults),
@@ -85,10 +87,10 @@ export default async function Home() {
             }`}
           >
             <SportIcon sport={s.key} />
-            <span className="text-sm font-semibold">{s.label}</span>
+            <span className="text-sm font-semibold">{t(`sports.${s.key}`)}</span>
             {!s.active && (
               <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">
-                Curând
+                {t("common.soon")}
               </span>
             )}
           </div>
@@ -98,19 +100,19 @@ export default async function Home() {
       {/* Featured: pontul zilei */}
       <section className="relative overflow-hidden rounded-2xl border border-[#C8F04A]/25 bg-gradient-to-br from-[#C8F04A]/20 via-white/[0.02] to-transparent p-6">
         <span className="text-xs font-bold uppercase tracking-widest text-[#C8F04A]">
-          Pontul zilei
+          {t("home.pickOfDay")}
         </span>
         <h1 className="mt-2 max-w-md font-display text-3xl font-extrabold uppercase leading-[0.95] tracking-tight">
-          Ponturi pentru Cupa Mondială 2026
+          {t("home.heroTitle")}
         </h1>
         <p className="mt-3 max-w-sm text-sm text-white/60">
-          Analize, predicții și valoare — actualizate zilnic.
+          {t("home.heroSubtitle")}
         </p>
         <Link
           href="/bets"
           className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
         >
-          Vezi ponturile →
+          {t("home.viewTips")} →
         </Link>
       </section>
 
@@ -118,7 +120,7 @@ export default async function Home() {
         <section>
           <div className="mb-3 flex items-center justify-between">
             <h2 className="font-display text-lg font-extrabold uppercase tracking-tight">
-              Clasamente
+              {t("home.standings")}
             </h2>
           </div>
           <StandingsTabs groups={groups} />
@@ -126,27 +128,32 @@ export default async function Home() {
       )}
 
       {upcoming.length > 0 && (
-        <MatchRow title="Urmează" matches={upcoming.slice(0, 8)} />
+        <MatchRow title={t("home.upcoming")} matches={upcoming.slice(0, 8)} seeAll={t("common.seeAll")} />
       )}
       {results.length > 0 && (
-        <MatchRow title="Rezultate" matches={results.slice(0, 8)} />
+        <MatchRow title={t("home.results")} matches={results.slice(0, 8)} seeAll={t("common.seeAll")} />
       )}
     </div>
   );
 }
 
-function MatchRow({ title, matches }: { title: string; matches: Match[] }) {
+function MatchRow({
+  title,
+  matches,
+  seeAll,
+}: {
+  title: string;
+  matches: Match[];
+  seeAll: string;
+}) {
   return (
     <section>
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-display text-lg font-extrabold uppercase tracking-tight">
           {title}
         </h2>
-        <Link
-          href="/matches"
-          className="text-xs font-semibold text-[#C8F04A]"
-        >
-          Vezi toate →
+        <Link href="/matches" className="text-xs font-semibold text-[#C8F04A]">
+          {seeAll} →
         </Link>
       </div>
       <div className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-2 lg:mx-0 lg:px-0">

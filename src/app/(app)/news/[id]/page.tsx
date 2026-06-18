@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getArticle } from "@/lib/api";
 import { formatDate, cleanTitle } from "@/lib/format";
 
@@ -10,6 +11,7 @@ export default async function ArticlePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const t = await getTranslations("news");
 
   let article;
   try {
@@ -21,9 +23,9 @@ export default async function ArticlePage({
   if (!article) {
     return (
       <div className="flex flex-col gap-4">
-        <BackLink />
+        <BackLink label={t("back")} />
         <p className="rounded-xl border border-white/10 p-6 text-sm text-white/60">
-          Articolul nu a fost găsit sau nu mai este disponibil.
+          {t("notFound")}
         </p>
       </div>
     );
@@ -34,7 +36,7 @@ export default async function ArticlePage({
 
   return (
     <article className="flex flex-col gap-5">
-      <BackLink />
+      <BackLink label={t("back")} />
 
       <div className="flex items-center gap-2 text-xs text-white/50">
         {article.source && (
@@ -59,24 +61,24 @@ export default async function ArticlePage({
         rel="noopener noreferrer"
         className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-medium text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
       >
-        Citește pe site
+        {t("readOnSite")}
         <span aria-hidden>↗</span>
       </a>
 
       <p className="text-xs text-white/40">
-        Vei fi redirecționat către {article.source || "sursa originală"}.
+        {t("redirect", { source: article.source || t("source") })}
       </p>
     </article>
   );
 }
 
-function BackLink() {
+function BackLink({ label }: { label: string }) {
   return (
     <Link
       href="/news"
       className="inline-flex w-fit items-center gap-1 text-sm text-white/60 transition-colors hover:text-white"
     >
-      ← Înapoi la știri
+      ← {label}
     </Link>
   );
 }

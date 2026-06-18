@@ -1,12 +1,15 @@
+import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { NewsCard } from "@/components/news-card";
 import { getNews } from "@/lib/api";
 
-export const metadata = { title: "Știri" };
+export const metadata = { title: "News" };
 // Fetch per request (the feed is external) and avoid build-time API calls.
 export const dynamic = "force-dynamic";
 
 export default async function NewsPage() {
+  const t = await getTranslations("news");
+
   let articles;
   try {
     const data = await getNews();
@@ -14,9 +17,9 @@ export default async function NewsPage() {
   } catch {
     return (
       <div>
-        <PageHeader subtitle="Noutăți despre Cupa Mondială 2026." />
+        <PageHeader subtitle={t("subtitle")} />
         <p className="rounded-xl border border-white/10 p-6 text-sm text-white/60">
-          Nu am putut încărca știrile momentan. Încearcă din nou mai târziu.
+          {t("couldntLoad")}
         </p>
       </div>
     );
@@ -24,10 +27,10 @@ export default async function NewsPage() {
 
   return (
     <div>
-      <PageHeader subtitle="Noutăți despre Cupa Mondială 2026." />
+      <PageHeader subtitle={t("subtitle")} />
 
       {articles.length === 0 ? (
-        <p className="text-sm text-white/60">Nicio știre disponibilă.</p>
+        <p className="text-sm text-white/60">{t("noNews")}</p>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => (

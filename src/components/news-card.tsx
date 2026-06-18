@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { Article } from "@/lib/api";
 import { formatDate, cleanTitle } from "@/lib/format";
 
 export function NewsCard({ article }: { article: Article }) {
+  const t = useTranslations("common");
   const date = formatDate(article.publishedAt);
   const title = cleanTitle(article.title, article.source);
 
@@ -31,7 +35,9 @@ export function NewsCard({ article }: { article: Article }) {
         </p>
       )}
 
-      <span className="mt-3 text-xs font-medium text-[#C8F04A]">Citește →</span>
+      <span className="mt-3 text-xs font-medium text-[#C8F04A]">
+        {t("read")} →
+      </span>
     </Link>
   );
 }

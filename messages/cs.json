@@ -1,0 +1,18 @@
+{
+  "nav": { "home": "Domů", "matches": "Zápasy", "bets": "Tipy", "watch": "Watch", "news": "Novinky", "profile": "Profil" },
+  "common": { "seeAll": "Zobrazit vše", "read": "Číst", "soon": "Brzy", "retry": "Zkusit znovu", "ft": "KON", "vs": "VS", "live": "Živě" },
+  "home": { "pickOfDay": "Tip dne", "heroTitle": "Tipy na Mistrovství světa 2026", "heroSubtitle": "Analýzy, předpovědi a value — aktualizováno denně.", "viewTips": "Zobrazit tipy", "standings": "Tabulky", "upcoming": "Nadcházející", "results": "Výsledky" },
+  "sports": { "football": "Fotbal", "basketball": "Basketbal", "tennis": "Tenis" },
+  "matches": { "subtitle": "Všechny zápasy MS 2026.", "couldntLoad": "Zápasy se nepodařilo načíst. Zkuste to znovu.", "none": "Žádné zápasy nenalezeny.", "byDate": "Podle data", "byGroup": "Podle skupiny" },
+  "matchDetail": { "back": "Zpět na zápasy", "details": "Detaily", "competition": "Soutěž", "date": "Datum", "stadium": "Stadion", "status": "Stav", "whereToWatch": "Kde sledovat", "notFound": "Zápas nenalezen." },
+  "standings": { "title": "Tabulky", "pos": "#", "team": "Tým", "played": "Z", "gd": "RS", "points": "B", "forGroup": "Tabulka · {group}" },
+  "watch": { "subtitle": "Zjistěte, kde sledovat nadcházející zápasy.", "fifaDesc": "Oficiální živé přenosy (v mnoha zemích zdarma)", "upcoming": "Nadcházející", "whereToWatch": "Kde sledovat", "note": "„Kde sledovat“ otevře oficiální vyhledávání pro každý zápas (YouTube je preferovaná platforma MS 2026). Přenosy se liší podle regionu.", "none": "Momentálně nejsou naplánovány žádné zápasy." },
+  "news": { "subtitle": "Novinky z MS 2026.", "couldntLoad": "Novinky se teď nepodařilo načíst. Zkuste to později.", "noNews": "Žádné novinky.", "notFound": "Článek nenalezen nebo již není dostupný.", "back": "Zpět na novinky", "readOnSite": "Číst na webu", "redirect": "Budete přesměrováni na {source}.", "source": "původní zdroj" },
+  "bets": { "subtitle": "Předpovědi a sázkové tipy na zápasy.", "comingSoon": "Zde se objeví tipy dne s kurzy a úrovní jistoty." },
+  "profile": { "subtitle": "Účet a nastavení.", "account": "Účet", "notifications": "Oznámení", "preferences": "Předvolby", "language": "Jazyk", "about": "O aplikaci", "rgTitle": "Odpovědné hraní", "rgText": "Oddvice poskytuje pouze informace a analýzy — nepřijímá sázky a nezaručuje výhry. Sázejte jen to, co si můžete dovolit ztratit.", "rgHelp": "Potřebujete pomoc?", "rgHelpUrl": "https://www.begambleaware.org", "serverStatus": "Stav serveru" },
+  "pwa": { "installTitle": "Nainstalovat Oddvice", "addToHome": "Přidat na plochu", "iosHint": "Klepněte na Sdílet a poté „Přidat na plochu“.", "browserHint": "K instalaci aplikace použijte menu prohlížeče." },
+  "apiStatus": { "online": "API online", "offline": "API nedostupné", "checking": "Kontrola API…" },
+  "footer": { "disclaimer": "18+ · Hrajte odpovědně. Tipy jsou informativní a nezaručují výhry.", "help": "Potřebujete pomoc?", "helpUrl": "https://www.begambleaware.org" },
+  "stage": { "group": "Skupina {letter}", "groupStage": "Skupinová fáze", "r16": "Osmifinále", "qf": "Čtvrtfinále", "sf": "Semifinále", "third": "O 3. místo", "final": "Finále" },
+  "comingSoon": "Brzy"
+}

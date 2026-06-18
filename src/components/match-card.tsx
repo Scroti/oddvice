@@ -1,5 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import type { Match } from "@/lib/api";
+import { localizeStage } from "@/lib/stage";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -41,9 +45,11 @@ function Team({
 }
 
 export function MatchCard({ match }: { match: Match }) {
+  const c = useTranslations("common");
+  const ts = useTranslations("stage");
   const played = match.homeScore != null && match.awayScore != null;
   const live = match.status === "LIVE";
-  const mid = live ? "LIVE" : played ? "FT" : "VS";
+  const mid = live ? c("live") : played ? c("ft") : c("vs");
   const date = match.kickoffAt?.slice(0, 10) ?? "";
 
   return (
@@ -53,7 +59,7 @@ export function MatchCard({ match }: { match: Match }) {
       className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/40 hover:bg-white/[0.04]"
     >
       <p className="mb-3 truncate text-center text-[11px] font-bold uppercase tracking-widest text-white/40">
-        {match.league}
+        {localizeStage(match.league, ts)}
       </p>
 
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">

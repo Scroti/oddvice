@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { API_URL, getHealth } from "@/lib/api";
 
 type State =
@@ -10,6 +11,7 @@ type State =
 
 /** Live badge showing whether the Go API is reachable. */
 export function ApiStatus() {
+  const t = useTranslations("apiStatus");
   const [state, setState] = useState<State>({ kind: "loading" });
 
   useEffect(() => {
@@ -31,10 +33,10 @@ export function ApiStatus() {
 
   const label =
     state.kind === "online"
-      ? `API online (${state.service})`
+      ? `${t("online")} (${state.service})`
       : state.kind === "offline"
-        ? "API unreachable"
-        : "Checking API…";
+        ? t("offline")
+        : t("checking");
 
   return (
     <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-white/15 px-3 py-1 text-sm">

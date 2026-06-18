@@ -1,25 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { getMatches, type Match } from "@/lib/api";
 import { MatchCard } from "@/components/match-card";
+import { localizeStage } from "@/lib/stage";
+import { formatDate } from "@/lib/format";
 
 type State =
   | { kind: "loading" }
   | { kind: "done"; matches: Match[] }
   | { kind: "error" };
 
-function groupByLeague(matches: Match[]): [string, Match[]][] {
+type View = "date" | "group";
+
+/** Groups items into [label, items][], preserving first-seen order. */
+function groupBy(matches: Match[], keyFn: (m: Match) => string): [string, Match[]][] {
   const map = new Map<string, Match[]>();
   for (const m of matches) {
-    const key = m.league || "Meciuri";
+    const key = keyFn(m);
     (map.get(key) ?? map.set(key, []).get(key)!).push(m);
   }
   return [...map.entries()];
 }
 
-/** Full competition match list, grouped by stage. */
 export function MatchList() {
+  const t = useTranslations("matches");
+  const ts = useTranslations("stage");
+  const [view, setView] = useState<View>("date");
   const [state, setState] = useState<State>({ kind: "loading" });
 
   useEffect(() => {
@@ -28,41 +36,74 @@ export function MatchList() {
       .catch(() => setState({ kind: "error" }));
   }, []);
 
-  if (state.kind === "loading") {
-    return (
-      <div className="mx-auto flex w-full max-w-xl flex-col gap-2.5">
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <div
-            key={i}
-            className="h-[104px] animate-pulse rounded-2xl border border-white/10 bg-white/[0.02]"
-          />
-        ))}
-      </div>
+  const groups = useMemo(() => {
+    if (state.kind !== "done") return [];
+    if (view === "group") {
+      return groupBy(state.matches, (m) => m.league || "—").map(
+        ([k, items]) => [localizeStage(k, ts), items] as [string, Match[]],
+      );
+    }
+    // by date: group by day (matches arrive sorted by kickoff ascending)
+    return groupBy(state.matches, (m) => m.kickoffAt?.slice(0, 10) ?? "—").map(
+      ([k, items]) =>
+        [k === "—" ? "—" : formatDate(`${k}T00:00:00Z`), items] as [
+          string,
+          Match[],
+        ],
     );
-  }
-
-  if (state.kind === "error") {
-    return (
-      <p className="mx-auto w-full max-w-xl rounded-xl border border-white/10 p-6 text-sm text-white/60">
-        Nu am putut încărca meciurile. Încearcă din nou.
-      </p>
-    );
-  }
+  }, [state, view, ts]);
 
   return (
-    <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
-      {groupByLeague(state.matches).map(([league, matches]) => (
-        <div key={league}>
-          <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
-            {league}
-          </h2>
-          <div className="flex flex-col gap-2.5">
-            {matches.map((m) => (
-              <MatchCard key={m.id} match={m} />
-            ))}
-          </div>
+    <div className="mx-auto w-full max-w-xl">
+      {/* View selector */}
+      <div className="mb-5 inline-flex rounded-full border border-white/15 p-1 text-xs font-bold uppercase tracking-wide">
+        {(["date", "group"] as View[]).map((v) => (
+          <button
+            key={v}
+            type="button"
+            onClick={() => setView(v)}
+            className={`rounded-full px-4 py-1.5 transition-colors ${
+              view === v ? "bg-[#C8F04A] text-[#020B0A]" : "text-white/55"
+            }`}
+          >
+            {v === "date" ? t("byDate") : t("byGroup")}
+          </button>
+        ))}
+      </div>
+
+      {state.kind === "loading" && (
+        <div className="flex flex-col gap-2.5">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div
+              key={i}
+              className="h-[104px] animate-pulse rounded-2xl border border-white/10 bg-white/[0.02]"
+            />
+          ))}
         </div>
-      ))}
+      )}
+
+      {state.kind === "error" && (
+        <p className="rounded-xl border border-white/10 p-6 text-sm text-white/60">
+          {t("couldntLoad")}
+        </p>
+      )}
+
+      {state.kind === "done" && (
+        <div className="flex flex-col gap-6">
+          {groups.map(([label, matches]) => (
+            <div key={label}>
+              <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
+                {label}
+              </h2>
+              <div className="flex flex-col gap-2.5">
+                {matches.map((m) => (
+                  <MatchCard key={m.id} match={m} />
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

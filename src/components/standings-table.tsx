@@ -1,16 +1,20 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import type { Group } from "@/lib/api";
 
-/** Presentational standings table for a single group (server-compatible). */
+/** Presentational standings table for a single group. */
 export function StandingsTable({ group }: { group: Group }) {
+  const t = useTranslations("standings");
   return (
     <table className="w-full text-sm">
       <thead>
         <tr className="text-[11px] uppercase tracking-wide text-white/35">
-          <th className="py-1.5 text-left font-medium">#</th>
-          <th className="py-1.5 text-left font-medium">Echipă</th>
-          <th className="py-1.5 text-center font-medium">J</th>
-          <th className="py-1.5 text-center font-medium">GD</th>
-          <th className="py-1.5 text-center font-medium">Pct</th>
+          <th className="py-1.5 text-left font-medium">{t("pos")}</th>
+          <th className="py-1.5 text-left font-medium">{t("team")}</th>
+          <th className="py-1.5 text-center font-medium">{t("played")}</th>
+          <th className="py-1.5 text-center font-medium">{t("gd")}</th>
+          <th className="py-1.5 text-center font-medium">{t("points")}</th>
         </tr>
       </thead>
       <tbody>
