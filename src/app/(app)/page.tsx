@@ -1,6 +1,13 @@
 import Link from "next/link";
-import { getUpcoming, getResults, type Match } from "@/lib/api";
+import {
+  getUpcoming,
+  getResults,
+  getStandings,
+  type Match,
+  type Group,
+} from "@/lib/api";
 import { MatchCard } from "@/components/match-card";
+import { StandingsTabs } from "@/components/standings-tabs";
 
 export const dynamic = "force-dynamic";
 
@@ -49,10 +56,19 @@ async function safe(fn: () => Promise<{ matches: Match[] }>): Promise<Match[]> {
   }
 }
 
+async function safeGroups(): Promise<Group[]> {
+  try {
+    return (await getStandings()).groups;
+  } catch {
+    return [];
+  }
+}
+
 export default async function Home() {
-  const [upcoming, results] = await Promise.all([
+  const [upcoming, results, groups] = await Promise.all([
     safe(getUpcoming),
     safe(getResults),
+    safeGroups(),
   ]);
 
   return (
@@ -97,6 +113,17 @@ export default async function Home() {
           Vezi ponturile →
         </Link>
       </section>
+
+      {groups.length > 0 && (
+        <section>
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="font-display text-lg font-extrabold uppercase tracking-tight">
+              Clasamente
+            </h2>
+          </div>
+          <StandingsTabs groups={groups} />
+        </section>
+      )}
 
       {upcoming.length > 0 && (
         <MatchRow title="Urmează" matches={upcoming.slice(0, 8)} />

@@ -74,6 +74,31 @@ export function getResults(): Promise<MatchSearchResponse> {
   return fetchMatches(`/api/v1/football/matches/results`);
 }
 
+export type Standing = {
+  position: number;
+  team: string;
+  crest: string;
+  played: number;
+  won: number;
+  draw: number;
+  lost: number;
+  goalDifference: number;
+  points: number;
+};
+
+export type Group = { name: string; table: Standing[] };
+
+export type StandingsResponse = { count: number; groups: Group[] };
+
+/** Group standings tables for the competition. */
+export async function getStandings(): Promise<StandingsResponse> {
+  const res = await fetch(`${API_URL}/api/v1/football/standings`, {
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<StandingsResponse>;
+}
+
 export type Article = {
   id: string;
   title: string;
