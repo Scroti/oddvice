@@ -4,7 +4,7 @@ import { getMatch, getStandings, type Match, type Group } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { localizeStage } from "@/lib/stage";
 import { StandingsTable } from "@/components/standings-table";
-import { watchUrl } from "@/components/watch-card";
+import { watchUrl } from "@/lib/watch";
 
 export const dynamic = "force-dynamic";
 
