@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getMatch, getStandings, type Match, type Group } from "@/lib/api";
 import { formatDate } from "@/lib/format";
 import { StandingsTable } from "@/components/standings-table";
+import { watchUrl } from "@/components/watch-card";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,15 @@ export default async function MatchDetailPage({
 
           <TeamColumn name={match.awayTeam} badge={match.awayBadge} />
         </div>
+
+        <a
+          href={watchUrl(match)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
+        >
+          Unde se transmite ↗
+        </a>
       </section>
 
       {/* Group standings (group-stage matches only) */}
@@ -115,16 +125,6 @@ export default async function MatchDetailPage({
         </div>
       </section>
 
-      {match.video && (
-        <a
-          href={match.video}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-[#C8F04A] px-5 py-2.5 text-sm font-bold uppercase tracking-wide text-[#020B0A] transition-colors hover:bg-[#D8FB6A]"
-        >
-          Vezi rezumat ↗
-        </a>
-      )}
     </div>
   );
 }
