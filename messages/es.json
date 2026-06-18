@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Instalar Oddvice", "addToHome": "Añadir a la pantalla de inicio", "iosHint": "Toca el botón Compartir y luego «Añadir a pantalla de inicio».", "browserHint": "Usa el menú del navegador para instalar la app." },
   "apiStatus": { "online": "API en línea", "offline": "API no disponible", "checking": "Comprobando API…" },
   "footer": { "disclaimer": "18+ · Juega con responsabilidad. Los pronósticos son informativos y no garantizan ganancias.", "help": "¿Necesitas ayuda?", "helpUrl": "https://www.begambleaware.org" },
+  "auth": { "signInTitle": "Iniciar sesión", "signUpTitle": "Crear cuenta", "signIn": "Iniciar sesión", "signUp": "Registrarse", "email": "Correo", "password": "Contraseña", "google": "Continuar con Google", "apple": "Continuar con Apple", "or": "o", "logout": "Cerrar sesión", "signedInAs": "Sesión iniciada como", "loginPrompt": "Inicia sesión para guardar favoritos y sincronizar entre dispositivos.", "haveAccount": "¿Ya tienes cuenta? Inicia sesión", "noAccount": "¿Sin cuenta? Regístrate", "notConfigured": "El inicio de sesión aún no está configurado.", "error": "Algo salió mal. Revisa tus datos." },
   "stage": { "group": "Grupo {letter}", "groupStage": "Fase de grupos", "r16": "Octavos", "qf": "Cuartos", "sf": "Semifinales", "third": "Tercer puesto", "final": "Final" },
   "comingSoon": "Pronto"
 }

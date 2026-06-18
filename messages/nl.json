@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Oddvice installeren", "addToHome": "Tovoegen aan beginscherm", "iosHint": "Tik op Delen en daarna ‘Zet op beginscherm’.", "browserHint": "Gebruik het browsermenu om de app te installeren." },
   "apiStatus": { "online": "API online", "offline": "API onbereikbaar", "checking": "API controleren…" },
   "footer": { "disclaimer": "18+ · Speel verantwoord. Tips zijn informatief en garanderen geen winst.", "help": "Hulp nodig?", "helpUrl": "https://www.begambleaware.org" },
+  "auth": { "signInTitle": "Inloggen", "signUpTitle": "Account aanmaken", "signIn": "Inloggen", "signUp": "Registreren", "email": "E-mail", "password": "Wachtwoord", "google": "Doorgaan met Google", "apple": "Doorgaan met Apple", "or": "of", "logout": "Uitloggen", "signedInAs": "Ingelogd als", "loginPrompt": "Log in om favorieten op te slaan en te synchroniseren tussen apparaten.", "haveAccount": "Heb je een account? Inloggen", "noAccount": "Geen account? Registreren", "notConfigured": "Inloggen is nog niet geconfigureerd.", "error": "Er ging iets mis. Controleer je gegevens." },
   "stage": { "group": "Groep {letter}", "groupStage": "Groepsfase", "r16": "Achtste finales", "qf": "Kwartfinales", "sf": "Halve finales", "third": "Troostfinale", "final": "Finale" },
   "comingSoon": "Binnenkort"
 }

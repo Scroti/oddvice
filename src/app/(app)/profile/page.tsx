@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/page-header";
 import { InstallPrompt } from "@/components/pwa";
 import { ApiStatus } from "@/components/api-status";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { Account } from "@/components/account";
 
 export const metadata = { title: "Profile" };
 
@@ -12,6 +13,8 @@ export default async function ProfilePage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader subtitle={t("subtitle")} />
+
+      <Account />
 
       {/* Language */}
       <div className="flex items-center justify-between rounded-xl border border-white/10 px-4 py-3">

@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Instalează Oddvice", "addToHome": "Adaugă pe ecranul principal", "iosHint": "Apasă butonul Share, apoi Adaugă pe ecranul principal.", "browserHint": "Folosește meniul browserului pentru a instala aplicația." },
   "apiStatus": { "online": "API online", "offline": "API indisponibil", "checking": "Verific API…" },
   "footer": { "disclaimer": "18+ · Joacă responsabil. Ponturile sunt informative și nu garantează câștiguri.", "help": "Ai nevoie de ajutor?", "helpUrl": "https://www.jocresponsabil.ro" },
+  "auth": { "signInTitle": "Autentificare", "signUpTitle": "Creează cont", "signIn": "Autentificare", "signUp": "Înregistrare", "email": "Email", "password": "Parolă", "google": "Continuă cu Google", "apple": "Continuă cu Apple", "or": "sau", "logout": "Deconectare", "signedInAs": "Conectat ca", "loginPrompt": "Autentifică-te ca să salvezi favorite și să sincronizezi pe dispozitive.", "haveAccount": "Ai cont? Autentifică-te", "noAccount": "N-ai cont? Înregistrează-te", "notConfigured": "Autentificarea nu e configurată încă.", "error": "Ceva n-a mers. Verifică datele." },
   "stage": { "group": "Grupa {letter}", "groupStage": "Faza grupelor", "r16": "Optimi", "qf": "Sferturi", "sf": "Semifinale", "third": "Finala mică", "final": "Finală" },
   "comingSoon": "În curând"
 }
