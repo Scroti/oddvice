@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Install Oddvice", "addToHome": "Add to Home Screen", "iosHint": "Tap the Share button, then Add to Home Screen.", "browserHint": "Use your browser menu to install the app." },
   "apiStatus": { "online": "API online", "offline": "API unreachable", "checking": "Checking API…" },
   "footer": { "disclaimer": "18+ · Play responsibly. Tips are informational and don't guarantee winnings.", "help": "Need help?", "helpUrl": "https://www.begambleaware.org" },
+  "onboarding": { "skip": "Skip", "next": "Next", "getStarted": "Get started" },
   "auth": { "signInTitle": "Sign in", "signUpTitle": "Create account", "signIn": "Sign in", "signUp": "Sign up", "email": "Email", "password": "Password", "google": "Continue with Google", "apple": "Continue with Apple", "or": "or", "logout": "Log out", "signedInAs": "Signed in as", "loginPrompt": "Sign in to save favorites and sync across devices.", "haveAccount": "Have an account? Sign in", "noAccount": "No account? Sign up", "notConfigured": "Sign-in isn't configured yet.", "error": "Something went wrong. Check your details." },
   "stage": { "group": "Group {letter}", "groupStage": "Group stage", "r16": "Round of 16", "qf": "Quarter-finals", "sf": "Semi-finals", "third": "Third place", "final": "Final" },
   "comingSoon": "Coming soon"

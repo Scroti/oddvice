@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Nainstalovat Oddvice", "addToHome": "Přidat na plochu", "iosHint": "Klepněte na Sdílet a poté „Přidat na plochu“.", "browserHint": "K instalaci aplikace použijte menu prohlížeče." },
   "apiStatus": { "online": "API online", "offline": "API nedostupné", "checking": "Kontrola API…" },
   "footer": { "disclaimer": "18+ · Hrajte odpovědně. Tipy jsou informativní a nezaručují výhry.", "help": "Potřebujete pomoc?", "helpUrl": "https://www.begambleaware.org" },
+  "onboarding": { "skip": "Přeskočit", "next": "Další", "getStarted": "Začít" },
   "auth": { "signInTitle": "Přihlásit se", "signUpTitle": "Vytvořit účet", "signIn": "Přihlásit se", "signUp": "Registrovat", "email": "E-mail", "password": "Heslo", "google": "Pokračovat přes Google", "apple": "Pokračovat přes Apple", "or": "nebo", "logout": "Odhlásit se", "signedInAs": "Přihlášen jako", "loginPrompt": "Přihlas se, abys ukládal oblíbené a synchronizoval mezi zařízeními.", "haveAccount": "Máš účet? Přihlas se", "noAccount": "Nemáš účet? Zaregistruj se", "notConfigured": "Přihlášení zatím není nakonfigurováno.", "error": "Něco se pokazilo. Zkontroluj údaje." },
   "stage": { "group": "Skupina {letter}", "groupStage": "Skupinová fáze", "r16": "Osmifinále", "qf": "Čtvrtfinále", "sf": "Semifinále", "third": "O 3. místo", "final": "Finále" },
   "comingSoon": "Brzy"

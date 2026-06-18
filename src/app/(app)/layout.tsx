@@ -2,6 +2,7 @@ import { Header } from "@/components/header";
 import { BottomNav } from "@/components/bottom-nav";
 import { Sidebar } from "@/components/sidebar";
 import { ResponsibleFooter } from "@/components/responsible-footer";
+import { Onboarding } from "@/components/onboarding";
 
 export default function AppLayout({
   children,
@@ -23,6 +24,7 @@ export default function AppLayout({
       </div>
 
       <BottomNav />
+      <Onboarding />
     </div>
   );
 }

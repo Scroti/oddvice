@@ -13,6 +13,7 @@
   "pwa": { "installTitle": "Installer Oddvice", "addToHome": "Ajouter à l'écran d'accueil", "iosHint": "Touche le bouton Partager, puis « Ajouter à l'écran d'accueil ».", "browserHint": "Utilise le menu du navigateur pour installer l'app." },
   "apiStatus": { "online": "API en ligne", "offline": "API injoignable", "checking": "Vérification de l'API…" },
   "footer": { "disclaimer": "18+ · Jouez responsable. Les pronos sont informatifs et ne garantissent aucun gain.", "help": "Besoin d'aide ?", "helpUrl": "https://www.begambleaware.org" },
+  "onboarding": { "skip": "Passer", "next": "Suivant", "getStarted": "Commencer" },
   "auth": { "signInTitle": "Connexion", "signUpTitle": "Créer un compte", "signIn": "Se connecter", "signUp": "S'inscrire", "email": "E-mail", "password": "Mot de passe", "google": "Continuer avec Google", "apple": "Continuer avec Apple", "or": "ou", "logout": "Se déconnecter", "signedInAs": "Connecté en tant que", "loginPrompt": "Connecte-toi pour enregistrer des favoris et synchroniser tes appareils.", "haveAccount": "Déjà un compte ? Se connecter", "noAccount": "Pas de compte ? S'inscrire", "notConfigured": "La connexion n'est pas encore configurée.", "error": "Une erreur s'est produite. Vérifie tes informations." },
   "stage": { "group": "Groupe {letter}", "groupStage": "Phase de groupes", "r16": "Huitièmes", "qf": "Quarts", "sf": "Demi-finales", "third": "Match pour la 3e place", "final": "Finale" },
   "comingSoon": "Bientôt"
