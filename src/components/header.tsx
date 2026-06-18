@@ -26,7 +26,7 @@ export function Header() {
       <div className="flex items-center gap-2.5">
         <Link href="/" aria-label="Acasă" className="shrink-0">
           <Image
-            src="/icon.svg"
+            src="/logo.svg"
             alt="Oddvice"
             width={30}
             height={30}

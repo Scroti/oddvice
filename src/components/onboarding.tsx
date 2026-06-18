@@ -84,7 +84,7 @@ export function Onboarding() {
 
       <div className="relative flex flex-1 items-start justify-center pt-6">
         <Image
-          src="/icon.svg"
+          src="/logo.svg"
           alt="Oddvice"
           width={44}
           height={44}

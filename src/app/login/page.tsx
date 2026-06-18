@@ -52,7 +52,7 @@ export default function LoginPage() {
     <main className="flex min-h-dvh flex-col items-center justify-center bg-[#020B0A] px-5 text-white">
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-8 flex items-center justify-center gap-2.5">
-          <Image src="/icon.svg" alt="Oddvice" width={36} height={36} unoptimized />
+          <Image src="/logo.svg" alt="Oddvice" width={36} height={36} unoptimized />
           <span className="font-display text-xl font-extrabold uppercase tracking-tight">
             Oddvice
           </span>
