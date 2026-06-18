@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { getMatch, type Match } from "@/lib/api";
+import { getMatch, getStandings, type Match, type Group } from "@/lib/api";
 import { formatDate } from "@/lib/format";
+import { StandingsTable } from "@/components/standings-table";
 
 export const dynamic = "force-dynamic";
 
@@ -28,6 +29,17 @@ export default async function MatchDetailPage({
     match = await getMatch(id);
   } catch {
     match = null;
+  }
+
+  // For group-stage matches, also load the group's standings table.
+  let group: Group | null = null;
+  if (match && match.league.startsWith("Grupa")) {
+    try {
+      const { groups } = await getStandings();
+      group = groups.find((g) => g.name === match!.league) ?? null;
+    } catch {
+      group = null;
+    }
   }
 
   if (!match) {
@@ -78,29 +90,29 @@ export default async function MatchDetailPage({
         </div>
       </section>
 
-      {/* Tabs (Info is the only populated one for now) */}
-      <div className="flex gap-2 overflow-x-auto">
-        {["Info", "Statistici", "Formații", "Evenimente"].map((t, i) => (
-          <span
-            key={t}
-            className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium ${
-              i === 0
-                ? "bg-[#C8F04A] text-[#020B0A]"
-                : "border border-white/15 text-white/45"
-            }`}
-          >
-            {t}
-          </span>
-        ))}
-      </div>
+      {/* Group standings (group-stage matches only) */}
+      {group && (
+        <section>
+          <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
+            Clasament · {group.name}
+          </h2>
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+            <StandingsTable group={group} />
+          </div>
+        </section>
+      )}
 
-      {/* Info panel */}
-      <section className="overflow-hidden rounded-2xl border border-white/10">
-        <InfoRow label="Competiție" value={match.league} />
-        {match.season && <InfoRow label="Sezon" value={match.season} />}
-        {date && <InfoRow label="Dată" value={date} />}
-        {match.venue && <InfoRow label="Stadion" value={match.venue} />}
-        <InfoRow label="Status" value={statusLabel(match.status, played)} />
+      {/* Details */}
+      <section>
+        <h2 className="mb-2 text-xs font-bold uppercase tracking-widest text-white/40">
+          Detalii
+        </h2>
+        <div className="overflow-hidden rounded-2xl border border-white/10">
+          <InfoRow label="Competiție" value={match.league} />
+          {date && <InfoRow label="Dată" value={date} />}
+          {match.venue && <InfoRow label="Stadion" value={match.venue} />}
+          <InfoRow label="Status" value={statusLabel(match.status, played)} />
+        </div>
       </section>
 
       {match.video && (
