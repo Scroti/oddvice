@@ -1,0 +1,23 @@
+[Unit]
+Description=Oddvice Web (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=oddvice
+Group=oddvice
+WorkingDirectory=/opt/oddvice-web
+Environment=NODE_ENV=production
+# Binds to localhost; Caddy reverse-proxies HTTPS to it.
+ExecStart=/opt/oddvice-web/node_modules/.bin/next start -H 127.0.0.1 -p 3000
+Restart=always
+RestartSec=3
+
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,14 @@
+# Cloudflare-proxied origin. In Cloudflare:
+#   1. DNS: A  theworldcup -> <VPS_IP>, Proxied (orange cloud)
+#   2. SSL/TLS -> Overview -> Full (strict)
+#   3. SSL/TLS -> Origin Server -> Create Certificate (theworldcup.oddvice.app
+#      or *.oddvice.app). Save the cert to /etc/caddy/origin.pem and the private
+#      key to /etc/caddy/origin.key (chmod 600 the key).
+#
+# If this VPS also hosts the API, just append this block to the existing
+# /etc/caddy/Caddyfile (keep the api.oddvice.app block as-is).
+theworldcup.oddvice.app {
+	tls /etc/caddy/origin.pem /etc/caddy/origin.key
+	encode gzip
+	reverse_proxy 127.0.0.1:3000
+}
