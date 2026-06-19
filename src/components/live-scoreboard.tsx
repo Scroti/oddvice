@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getLive, type LiveMatch } from "@/lib/api";
 import { Commentary } from "@/components/commentary";
+import { GoalNotifyButton } from "@/components/goal-notify-button";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -147,11 +148,14 @@ export function LiveScoreboard() {
 
   return (
     <section>
-      <div className="mb-2 flex items-center gap-2">
-        <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" />
-        <h2 className="text-xs font-bold uppercase tracking-widest text-white/40">
-          {t("title")}
-        </h2>
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" />
+          <h2 className="text-xs font-bold uppercase tracking-widest text-white/40">
+            {t("title")}
+          </h2>
+        </div>
+        <GoalNotifyButton />
       </div>
       <div className="-mx-5 flex gap-2.5 overflow-x-auto px-5 pb-1 lg:mx-0 lg:px-0">
         {matches.map((m) => (
