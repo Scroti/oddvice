@@ -44,80 +44,119 @@ function winProb(hg: number, ag: number, min: number) {
   return { home: pct(home), draw: pct(draw), away: pct(away) };
 }
 
-function WinProbBar({ m, label }: { m: LiveMatch; label: string }) {
-  const p = winProb(m.homeGoals, m.awayGoals, m.elapsed);
+function Crest({ name, logo, size = 28 }: { name: string; logo?: string; size?: number }) {
+  if (logo) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={logo}
+        alt={name}
+        width={size}
+        height={size}
+        referrerPolicy="no-referrer"
+        className="shrink-0 object-contain"
+        style={{ width: size, height: size }}
+      />
+    );
+  }
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
-      <div className="mb-1 flex items-center justify-between text-[11px]">
-        <span className="font-semibold tabular-nums text-[#C8F04A]">{p.home}%</span>
-        <span className="text-white/45">{label}</span>
-        <span className="font-semibold tabular-nums text-sky-300">{p.away}%</span>
-      </div>
-      <div className="flex h-1.5 gap-0.5 overflow-hidden rounded-full">
-        <div className="bg-[#C8F04A]" style={{ width: `${p.home}%` }} />
-        <div className="bg-white/25" style={{ width: `${p.draw}%` }} />
-        <div className="flex-1 bg-sky-400/70" />
-      </div>
-    </div>
+    <span
+      className="grid shrink-0 place-items-center rounded-md bg-white/10 text-[10px] font-bold text-white/60"
+      style={{ width: size, height: size }}
+    >
+      {abbr(name)}
+    </span>
   );
 }
 
-function Side({ name, logo, goals }: { name: string; logo?: string; goals: number }) {
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <span className="flex min-w-0 items-center gap-1.5">
-        {logo ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={logo} alt={name} width={16} height={16} referrerPolicy="no-referrer" className="h-4 w-4 shrink-0 object-contain" />
-        ) : (
-          <span className="text-[10px] font-bold text-white/40">{abbr(name)}</span>
-        )}
-        <span className="truncate text-[13px]">{name}</span>
-      </span>
-      <span className="font-display text-base font-extrabold tabular-nums">{goals}</span>
-    </div>
-  );
-}
-
-function LiveChip({
+/** A full-width live match card: scoreboard + win-prob bar; tap to expand the
+ * live commentary timeline inline. */
+function LiveCard({
   m,
-  active,
-  onClick,
+  expanded,
+  onToggle,
 }: {
   m: LiveMatch;
-  active: boolean;
-  onClick: () => void;
+  expanded: boolean;
+  onToggle: () => void;
 }) {
+  const t = useTranslations("live");
+  const p = winProb(m.homeGoals, m.awayGoals, m.elapsed);
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`min-w-[170px] shrink-0 rounded-xl border p-3 text-left transition ${
-        active
-          ? "border-[#C8F04A]/50 bg-[#C8F04A]/[0.06]"
-          : "border-red-500/25 bg-white/[0.02] hover:border-white/20"
+    <div
+      className={`rounded-2xl border bg-white/[0.02] p-4 transition ${
+        expanded ? "border-[#C8F04A]/40" : "border-white/10"
       }`}
     >
-      <div className="mb-1.5 flex items-center gap-1.5">
-        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
-        <span className="text-[10px] font-bold uppercase tracking-wide text-red-400">
-          {minuteLabel(m)}
-        </span>
+      <button type="button" onClick={onToggle} className="w-full text-left">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
+            <span className="text-[11px] font-bold uppercase tracking-wide text-red-400">
+              {minuteLabel(m)}
+            </span>
+          </span>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`text-white/40 transition-transform ${expanded ? "rotate-180" : ""}`}
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-2 text-right">
+            <span className="truncate text-sm font-medium">{m.home}</span>
+            <Crest name={m.home} logo={m.homeLogo} />
+          </div>
+          <div className="flex items-center gap-2 font-display text-2xl font-extrabold tabular-nums">
+            <span>{m.homeGoals}</span>
+            <span className="text-white/30">–</span>
+            <span>{m.awayGoals}</span>
+          </div>
+          <div className="flex min-w-0 flex-1 items-center gap-2">
+            <Crest name={m.away} logo={m.awayLogo} />
+            <span className="truncate text-sm font-medium">{m.away}</span>
+          </div>
+        </div>
+      </button>
+
+      <div className="mt-3">
+        <div className="mb-1 flex items-center justify-between text-[11px]">
+          <span className="font-semibold tabular-nums text-[#C8F04A]">{p.home}%</span>
+          <span className="text-white/45">{t("winProb")}</span>
+          <span className="font-semibold tabular-nums text-sky-300">{p.away}%</span>
+        </div>
+        <div className="flex h-1.5 gap-0.5 overflow-hidden rounded-full">
+          <div className="bg-[#C8F04A]" style={{ width: `${p.home}%` }} />
+          <div className="bg-white/25" style={{ width: `${p.draw}%` }} />
+          <div className="flex-1 bg-sky-400/70" />
+        </div>
       </div>
-      <div className="space-y-1">
-        <Side name={m.home} logo={m.homeLogo} goals={m.homeGoals} />
-        <Side name={m.away} logo={m.awayLogo} goals={m.awayGoals} />
-      </div>
-    </button>
+
+      {expanded && (
+        <div className="mt-4">
+          <Commentary fixtureId={m.fixtureId} embedded />
+        </div>
+      )}
+    </div>
   );
 }
 
-/** Auto-refreshing live hub on the feed: a strip of in-play matches, and the
- * selected match's live commentary below it. Renders nothing when none live. */
+/** Auto-refreshing live hub on the feed: a vertical stack of full-width live
+ * match cards (one per in-play match), each expandable to its live commentary.
+ * Renders nothing when none are live. */
 export function LiveScoreboard() {
   const t = useTranslations("live");
   const [matches, setMatches] = useState<LiveMatch[]>([]);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -133,13 +172,13 @@ export function LiveScoreboard() {
     };
   }, []);
 
-  // Default to the first live match; keep selection while it stays live.
+  // Default to expanding the first live match; keep selection while it stays live.
   useEffect(() => {
     if (matches.length === 0) {
-      setSelected(null);
+      setExpanded(null);
       return;
     }
-    setSelected((prev) =>
+    setExpanded((prev) =>
       prev && matches.some((m) => m.fixtureId === prev) ? prev : matches[0].fixtureId,
     );
   }, [matches]);
@@ -148,7 +187,7 @@ export function LiveScoreboard() {
 
   return (
     <section>
-      <div className="mb-2 flex items-center justify-between gap-2">
+      <div className="mb-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 animate-pulse rounded-full bg-red-500" />
           <h2 className="text-xs font-bold uppercase tracking-widest text-white/40">
@@ -157,25 +196,18 @@ export function LiveScoreboard() {
         </div>
         <GoalNotifyButton />
       </div>
-      <div className="-mx-5 flex gap-2.5 overflow-x-auto px-5 pb-1 lg:mx-0 lg:px-0">
+      <div className="space-y-3">
         {matches.map((m) => (
-          <LiveChip
+          <LiveCard
             key={m.fixtureId}
             m={m}
-            active={m.fixtureId === selected}
-            onClick={() => setSelected(m.fixtureId)}
+            expanded={m.fixtureId === expanded}
+            onToggle={() =>
+              setExpanded((e) => (e === m.fixtureId ? null : m.fixtureId))
+            }
           />
         ))}
       </div>
-      {selected && (
-        <div className="mt-3 space-y-3">
-          {(() => {
-            const sel = matches.find((m) => m.fixtureId === selected);
-            return sel ? <WinProbBar m={sel} label={t("winProb")} /> : null;
-          })()}
-          <Commentary fixtureId={selected} />
-        </div>
-      )}
     </section>
   );
 }
