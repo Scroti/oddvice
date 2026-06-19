@@ -9,6 +9,7 @@ import {
 } from "@/lib/api";
 import { MatchCard } from "@/components/match-card";
 import { StandingsTabs } from "@/components/standings-tabs";
+import { LiveScoreboard } from "@/components/live-scoreboard";
 
 export const dynamic = "force-dynamic";
 
@@ -75,6 +76,9 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-8">
+      {/* Live matches (auto-refresh; hidden when none live) */}
+      <LiveScoreboard />
+
       {/* Sport categories */}
       <section className="grid grid-cols-3 gap-3">
         {SPORTS.map((s) => (

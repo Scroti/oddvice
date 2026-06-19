@@ -247,6 +247,53 @@ export type Lineup = {
 
 export type MatchLineups = { home: Lineup | null; away: Lineup | null };
 
+export type LiveMatch = {
+  fixtureId: number;
+  home: string;
+  away: string;
+  homeLogo?: string;
+  awayLogo?: string;
+  homeGoals: number;
+  awayGoals: number;
+  elapsed: number;
+  status: string; // 1H, HT, 2H, ET, P, …
+};
+
+export type LiveResponse = { count: number; matches: LiveMatch[] };
+
+/** Currently in-play matches (poll this ~30s for a live scoreboard). */
+export async function getLive(): Promise<LiveResponse> {
+  const res = await fetch(`${API_URL}/api/v1/live`, { cache: "no-store" });
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<LiveResponse>;
+}
+
+export type MatchEvent = {
+  minute: number;
+  extra?: number;
+  team: string;
+  type: string; // "Goal" | "Card" | "subst" | "Var"
+  detail: string;
+  player?: string;
+  assist?: string;
+};
+
+export type EventsResponse = { count: number; events: MatchEvent[] };
+
+/** Match timeline (goals, cards, subs) for a fixture by names + date. */
+export async function getEvents(
+  home: string,
+  away: string,
+  date: string,
+): Promise<EventsResponse> {
+  const qs = new URLSearchParams({ home, away, date }).toString();
+  const res = await fetch(`${API_URL}/api/v1/events?${qs}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<EventsResponse>;
+}
+
 export type MatchStatLine = { type: string; home: string; away: string };
 export type MatchStats = { lines: MatchStatLine[] | null };
 
