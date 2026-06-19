@@ -10,6 +10,7 @@ import {
 import { MatchCard } from "@/components/match-card";
 import { StandingsTabs } from "@/components/standings-tabs";
 import { LiveScoreboard } from "@/components/live-scoreboard";
+import { LocalTime } from "@/components/local-time";
 
 export const dynamic = "force-dynamic";
 
@@ -79,6 +80,9 @@ export default async function Home() {
       {/* Live matches (auto-refresh; hidden when none live) */}
       <LiveScoreboard />
 
+      {/* Next match — soonest upcoming fixture */}
+      {upcoming.length > 0 && <NextMatch match={upcoming[0]} />}
+
       {/* Sport categories */}
       <section className="grid grid-cols-3 gap-3">
         {SPORTS.map((s) => (
@@ -138,6 +142,54 @@ export default async function Home() {
         <MatchRow title={t("home.results")} matches={results.slice(0, 8)} seeAll={t("common.seeAll")} />
       )}
     </div>
+  );
+}
+
+function Badge({ name, url }: { name: string; url?: string }) {
+  if (url) return <img src={url} alt="" className="h-10 w-10 object-contain" />;
+  const abbr =
+    name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
+  return (
+    <div className="flex h-10 w-10 items-center justify-center rounded bg-white/10 text-xs font-bold">
+      {abbr}
+    </div>
+  );
+}
+
+function NextMatch({ match }: { match: Match }) {
+  return (
+    <Link
+      href={`/matches/${match.id}`}
+      className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition-colors hover:border-[#C8F04A]/40"
+    >
+      <span className="text-[11px] font-bold uppercase tracking-widest text-[#C8F04A]">
+        Next match
+      </span>
+      <div className="mt-3 flex items-center">
+        <div className="flex flex-1 flex-col items-center gap-1.5">
+          <Badge name={match.homeTeam} url={match.homeBadge} />
+          <span className="text-center text-[13px] font-semibold">
+            {match.homeTeam}
+          </span>
+        </div>
+        <div className="flex flex-col items-center px-3">
+          <span className="font-display text-lg font-extrabold text-white/60">
+            VS
+          </span>
+          {match.kickoffAt && (
+            <span className="mt-1.5 text-center text-[11px] text-white/45">
+              <LocalTime iso={match.kickoffAt} mode="datetime" />
+            </span>
+          )}
+        </div>
+        <div className="flex flex-1 flex-col items-center gap-1.5">
+          <Badge name={match.awayTeam} url={match.awayBadge} />
+          <span className="text-center text-[13px] font-semibold">
+            {match.awayTeam}
+          </span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
