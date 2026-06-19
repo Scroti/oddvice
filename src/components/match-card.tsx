@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import type { Match } from "@/lib/api";
 import { localizeStage } from "@/lib/stage";
+import { LocalTime } from "@/components/local-time";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -50,7 +51,6 @@ export function MatchCard({ match }: { match: Match }) {
   const played = match.homeScore != null && match.awayScore != null;
   const live = match.status === "LIVE";
   const mid = live ? c("live") : played ? c("ft") : c("vs");
-  const date = match.kickoffAt?.slice(0, 10) ?? "";
 
   return (
     <Link
@@ -86,9 +86,11 @@ export function MatchCard({ match }: { match: Match }) {
         <Team name={match.awayTeam} badge={match.awayBadge} align="start" />
       </div>
 
-      {(date || match.venue) && (
+      {(match.kickoffAt || match.venue) && (
         <p className="mt-3 truncate text-center text-[11px] text-white/35">
-          {[date, match.venue].filter(Boolean).join(" · ")}
+          {match.kickoffAt && <LocalTime iso={match.kickoffAt} mode="datetime" />}
+          {match.kickoffAt && match.venue ? " · " : ""}
+          {match.venue}
         </p>
       )}
     </Link>

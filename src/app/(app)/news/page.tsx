@@ -1,4 +1,4 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { NewsCard } from "@/components/news-card";
 import { getNews } from "@/lib/api";
@@ -9,10 +9,11 @@ export const dynamic = "force-dynamic";
 
 export default async function NewsPage() {
   const t = await getTranslations("news");
+  const locale = await getLocale();
 
   let articles;
   try {
-    const data = await getNews();
+    const data = await getNews(locale);
     articles = data.articles;
   } catch {
     return (

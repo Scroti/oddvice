@@ -3,10 +3,21 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
-/** Registers the service worker once the page has loaded. */
+/** Registers the service worker in production only. In development a SW just
+ * causes stale/confusing responses (e.g. raw RSC payloads), so we actively
+ * unregister any existing one instead. */
 export function ServiceWorkerRegistrar() {
   useEffect(() => {
     if (!("serviceWorker" in navigator)) return;
+
+    if (process.env.NODE_ENV !== "production") {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then((regs) => regs.forEach((r) => r.unregister()))
+        .catch(() => {});
+      return;
+    }
+
     const onLoad = () => {
       navigator.serviceWorker
         .register("/sw.js", { scope: "/", updateViaCache: "none" })

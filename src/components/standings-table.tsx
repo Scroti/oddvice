@@ -19,7 +19,7 @@ export function StandingsTable({ group }: { group: Group }) {
       </thead>
       <tbody>
         {group.table.map((row) => (
-          <tr key={row.position} className="border-t border-white/[0.06]">
+          <tr key={row.team} className="border-t border-white/[0.06]">
             <td className="py-2 text-white/40">{row.position}</td>
             <td className="py-2">
               <span className="flex items-center gap-2">

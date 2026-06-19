@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getArticle } from "@/lib/api";
 import { formatDate, cleanTitle } from "@/lib/format";
 
@@ -12,10 +12,11 @@ export default async function ArticlePage({
 }) {
   const { id } = await params;
   const t = await getTranslations("news");
+  const locale = await getLocale();
 
   let article;
   try {
-    article = await getArticle(id);
+    article = await getArticle(id, locale);
   } catch {
     article = null;
   }
