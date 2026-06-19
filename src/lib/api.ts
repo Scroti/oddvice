@@ -294,6 +294,17 @@ export async function getEvents(
   return res.json() as Promise<EventsResponse>;
 }
 
+/** Match timeline for a known api-football fixture id (used for live matches). */
+export async function getEventsByFixture(
+  fixtureId: number,
+): Promise<EventsResponse> {
+  const res = await fetch(`${API_URL}/api/v1/events?fixture=${fixtureId}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) throw new Error(`API responded with ${res.status}`);
+  return res.json() as Promise<EventsResponse>;
+}
+
 export type MatchStatLine = { type: string; home: string; away: string };
 export type MatchStats = { lines: MatchStatLine[] | null };
 

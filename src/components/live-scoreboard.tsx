@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { getLive, type LiveMatch } from "@/lib/api";
+import { Commentary } from "@/components/commentary";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -31,9 +32,25 @@ function Side({ name, logo, goals }: { name: string; logo?: string; goals: numbe
   );
 }
 
-function LiveChip({ m }: { m: LiveMatch }) {
+function LiveChip({
+  m,
+  active,
+  onClick,
+}: {
+  m: LiveMatch;
+  active: boolean;
+  onClick: () => void;
+}) {
   return (
-    <div className="min-w-[170px] shrink-0 rounded-xl border border-red-500/25 bg-white/[0.02] p-3">
+    <button
+      type="button"
+      onClick={onClick}
+      className={`min-w-[170px] shrink-0 rounded-xl border p-3 text-left transition ${
+        active
+          ? "border-[#C8F04A]/50 bg-[#C8F04A]/[0.06]"
+          : "border-red-500/25 bg-white/[0.02] hover:border-white/20"
+      }`}
+    >
       <div className="mb-1.5 flex items-center gap-1.5">
         <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
         <span className="text-[10px] font-bold uppercase tracking-wide text-red-400">
@@ -44,14 +61,16 @@ function LiveChip({ m }: { m: LiveMatch }) {
         <Side name={m.home} logo={m.homeLogo} goals={m.homeGoals} />
         <Side name={m.away} logo={m.awayLogo} goals={m.awayGoals} />
       </div>
-    </div>
+    </button>
   );
 }
 
-/** Auto-refreshing strip of in-play matches. Renders nothing when none are live. */
+/** Auto-refreshing live hub on the feed: a strip of in-play matches, and the
+ * selected match's live commentary below it. Renders nothing when none live. */
 export function LiveScoreboard() {
   const t = useTranslations("live");
   const [matches, setMatches] = useState<LiveMatch[]>([]);
+  const [selected, setSelected] = useState<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -67,6 +86,17 @@ export function LiveScoreboard() {
     };
   }, []);
 
+  // Default to the first live match; keep selection while it stays live.
+  useEffect(() => {
+    if (matches.length === 0) {
+      setSelected(null);
+      return;
+    }
+    setSelected((prev) =>
+      prev && matches.some((m) => m.fixtureId === prev) ? prev : matches[0].fixtureId,
+    );
+  }, [matches]);
+
   if (matches.length === 0) return null;
 
   return (
@@ -79,9 +109,19 @@ export function LiveScoreboard() {
       </div>
       <div className="-mx-5 flex gap-2.5 overflow-x-auto px-5 pb-1 lg:mx-0 lg:px-0">
         {matches.map((m) => (
-          <LiveChip key={m.fixtureId} m={m} />
+          <LiveChip
+            key={m.fixtureId}
+            m={m}
+            active={m.fixtureId === selected}
+            onClick={() => setSelected(m.fixtureId)}
+          />
         ))}
       </div>
+      {selected && (
+        <div className="mt-3">
+          <Commentary fixtureId={selected} />
+        </div>
+      )}
     </section>
   );
 }

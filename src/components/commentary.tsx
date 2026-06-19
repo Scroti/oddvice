@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { getEvents, type MatchEvent } from "@/lib/api";
+import { getEventsByFixture, type MatchEvent } from "@/lib/api";
 
 function icon(e: MatchEvent): string {
   if (e.type === "Goal") return "⚽";
@@ -15,22 +15,15 @@ function icon(e: MatchEvent): string {
 
 /** Flashscore-style live timeline (goals, cards, subs). Polls ~30s; renders
  * nothing until there are events. Newest at the top. */
-export function Commentary({
-  home,
-  away,
-  date,
-}: {
-  home: string;
-  away: string;
-  date: string;
-}) {
+export function Commentary({ fixtureId }: { fixtureId: number }) {
   const t = useTranslations("live");
   const [events, setEvents] = useState<MatchEvent[]>([]);
 
   useEffect(() => {
     let active = true;
+    setEvents([]); // reset when switching match
     const load = () =>
-      getEvents(home, away, date)
+      getEventsByFixture(fixtureId)
         .then((r) => active && setEvents(r.events))
         .catch(() => {});
     load();
@@ -39,7 +32,7 @@ export function Commentary({
       active = false;
       clearInterval(id);
     };
-  }, [home, away, date]);
+  }, [fixtureId]);
 
   if (events.length === 0) return null;
   const rows = [...events].reverse(); // newest first

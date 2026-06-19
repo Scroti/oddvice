@@ -19,7 +19,6 @@ import { StandingsTable } from "@/components/standings-table";
 import { TeamStats } from "@/components/team-stats";
 import { Pitch } from "@/components/pitch";
 import { MatchStatsTable } from "@/components/match-stats-table";
-import { Commentary } from "@/components/commentary";
 import { LocalTime } from "@/components/local-time";
 import { watchUrl } from "@/lib/watch";
 
@@ -150,9 +149,6 @@ export default async function MatchDetailPage({
           {t("matchDetail.whereToWatch")} ↗
         </a>
       </section>
-
-      {/* Live commentary (auto-refresh; hidden until there are events) */}
-      <Commentary home={match.homeTeam} away={match.awayTeam} date={matchDate} />
 
       {/* Formations — schematic pitch with both teams placed by formation */}
       <section>
