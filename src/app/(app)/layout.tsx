@@ -4,6 +4,7 @@ import { BottomNav } from "@/components/bottom-nav";
 import { Sidebar } from "@/components/sidebar";
 import { ResponsibleFooter } from "@/components/responsible-footer";
 import { Onboarding } from "@/components/onboarding";
+import { NotificationWatcher } from "@/components/notification-watcher";
 
 export default async function AppLayout({
   children,
@@ -28,6 +29,7 @@ export default async function AppLayout({
       </div>
 
       <BottomNav />
+      <NotificationWatcher />
       {!onboarded && <Onboarding />}
     </div>
   );

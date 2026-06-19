@@ -341,3 +341,27 @@ export async function getLineups(
   if (!res.ok) return null;
   return res.json() as Promise<MatchLineups>;
 }
+
+export type PlayerHit = {
+  id: number;
+  name: string;
+  photo?: string;
+  team?: string;
+  nationality?: string;
+};
+
+/** Search footballers by name (DB-backed; empty for queries under 3 chars). */
+export async function searchPlayers(q: string): Promise<PlayerHit[]> {
+  if (q.trim().length < 3) return [];
+  try {
+    const res = await fetch(
+      `${API_URL}/api/v1/players/search?q=${encodeURIComponent(q.trim())}`,
+      { cache: "no-store" },
+    );
+    if (!res.ok) return [];
+    const data = (await res.json()) as { players?: PlayerHit[] };
+    return data.players ?? [];
+  } catch {
+    return [];
+  }
+}
