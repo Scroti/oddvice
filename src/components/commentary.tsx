@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { getEventsByFixture, type MatchEvent } from "@/lib/api";
 
 function icon(e: MatchEvent): string {
@@ -17,13 +17,14 @@ function icon(e: MatchEvent): string {
  * nothing until there are events. Newest at the top. */
 export function Commentary({ fixtureId }: { fixtureId: number }) {
   const t = useTranslations("live");
+  const locale = useLocale();
   const [events, setEvents] = useState<MatchEvent[]>([]);
 
   useEffect(() => {
     let active = true;
     setEvents([]); // reset when switching match
     const load = () =>
-      getEventsByFixture(fixtureId)
+      getEventsByFixture(fixtureId, locale)
         .then((r) => active && setEvents(r.events))
         .catch(() => {});
     load();
@@ -32,7 +33,7 @@ export function Commentary({ fixtureId }: { fixtureId: number }) {
       active = false;
       clearInterval(id);
     };
-  }, [fixtureId]);
+  }, [fixtureId, locale]);
 
   if (events.length === 0) return null;
   const rows = [...events].reverse(); // newest first
@@ -52,12 +53,18 @@ export function Commentary({ fixtureId }: { fixtureId: number }) {
               </span>
               <span className="w-5 shrink-0 text-center">{icon(e)}</span>
               <span className="min-w-0">
-                <span className="font-semibold">{e.player || e.detail}</span>
-                {e.type === "subst" && e.assist ? (
-                  <span className="text-white/45"> ↔ {e.assist}</span>
-                ) : e.type === "Goal" && e.assist ? (
-                  <span className="text-white/45"> ({e.assist})</span>
-                ) : null}
+                {e.commentary ? (
+                  <span className="font-medium leading-snug">{e.commentary}</span>
+                ) : (
+                  <span>
+                    <span className="font-semibold">{e.player || e.detail}</span>
+                    {e.type === "subst" && e.assist ? (
+                      <span className="text-white/45"> ↔ {e.assist}</span>
+                    ) : e.type === "Goal" && e.assist ? (
+                      <span className="text-white/45"> ({e.assist})</span>
+                    ) : null}
+                  </span>
+                )}
                 <span className="block text-[11px] text-white/35">
                   {e.team}
                   {e.type !== "Goal" ? ` · ${e.detail}` : ""}

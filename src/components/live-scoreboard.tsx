@@ -15,6 +15,52 @@ function minuteLabel(m: LiveMatch): string {
   return `${m.elapsed}'`;
 }
 
+/** Rough live win-probability from score + minute (an estimate, not a model). */
+function winProb(hg: number, ag: number, min: number) {
+  const lead = hg - ag;
+  const prog = Math.min(Math.max(min, 0), 95) / 95; // 0..1 match progress
+  let home = 0.4;
+  let draw = 0.27;
+  let away = 0.33;
+  if (lead === 0) {
+    draw = 0.27 + 0.45 * prog; // a draw firms up as time runs out
+    const rest = 1 - draw;
+    home = rest * 0.55;
+    away = rest * 0.45;
+  } else {
+    const w = Math.min(0.92, (0.18 + 0.72 * prog) * Math.min(Math.abs(lead), 3));
+    if (lead > 0) {
+      home = 0.4 + w * 0.6;
+      away = 0.33 * (1 - w);
+      draw = 1 - home - away;
+    } else {
+      away = 0.33 + w * 0.67;
+      home = 0.4 * (1 - w);
+      draw = 1 - home - away;
+    }
+  }
+  const pct = (x: number) => Math.round(Math.max(0, x) * 100);
+  return { home: pct(home), draw: pct(draw), away: pct(away) };
+}
+
+function WinProbBar({ m, label }: { m: LiveMatch; label: string }) {
+  const p = winProb(m.homeGoals, m.awayGoals, m.elapsed);
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+      <div className="mb-1 flex items-center justify-between text-[11px]">
+        <span className="font-semibold tabular-nums text-[#C8F04A]">{p.home}%</span>
+        <span className="text-white/45">{label}</span>
+        <span className="font-semibold tabular-nums text-sky-300">{p.away}%</span>
+      </div>
+      <div className="flex h-1.5 gap-0.5 overflow-hidden rounded-full">
+        <div className="bg-[#C8F04A]" style={{ width: `${p.home}%` }} />
+        <div className="bg-white/25" style={{ width: `${p.draw}%` }} />
+        <div className="flex-1 bg-sky-400/70" />
+      </div>
+    </div>
+  );
+}
+
 function Side({ name, logo, goals }: { name: string; logo?: string; goals: number }) {
   return (
     <div className="flex items-center justify-between gap-2">
@@ -118,7 +164,11 @@ export function LiveScoreboard() {
         ))}
       </div>
       {selected && (
-        <div className="mt-3">
+        <div className="mt-3 space-y-3">
+          {(() => {
+            const sel = matches.find((m) => m.fixtureId === selected);
+            return sel ? <WinProbBar m={sel} label={t("winProb")} /> : null;
+          })()}
           <Commentary fixtureId={selected} />
         </div>
       )}

@@ -276,6 +276,7 @@ export type MatchEvent = {
   detail: string;
   player?: string;
   assist?: string;
+  commentary?: string; // AI one-liner, when available
 };
 
 export type EventsResponse = { count: number; events: MatchEvent[] };
@@ -294,11 +295,15 @@ export async function getEvents(
   return res.json() as Promise<EventsResponse>;
 }
 
-/** Match timeline for a known api-football fixture id (used for live matches). */
+/** Match timeline for a known api-football fixture id (used for live matches).
+ * lang requests AI commentary lines in that language. */
 export async function getEventsByFixture(
   fixtureId: number,
+  lang?: string,
 ): Promise<EventsResponse> {
-  const res = await fetch(`${API_URL}/api/v1/events?fixture=${fixtureId}`, {
+  const q = new URLSearchParams({ fixture: String(fixtureId) });
+  if (lang) q.set("lang", lang);
+  const res = await fetch(`${API_URL}/api/v1/events?${q.toString()}`, {
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`API responded with ${res.status}`);

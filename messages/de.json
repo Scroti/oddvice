@@ -17,7 +17,7 @@
   "footer": { "disclaimer": "18+ · Spiele verantwortungsvoll. Tipps sind nur Informationen und garantieren keine Gewinne.", "help": "Brauchst du Hilfe?", "helpUrl": "https://www.begambleaware.org" },
   "onboarding": { "skip": "Überspringen", "next": "Weiter", "getStarted": "Loslegen" },
   "auth": { "signInTitle": "Anmelden", "signUpTitle": "Konto erstellen", "signIn": "Anmelden", "signUp": "Registrieren", "email": "E-Mail", "password": "Passwort", "google": "Mit Google fortfahren", "apple": "Mit Apple fortfahren", "or": "oder", "logout": "Abmelden", "signedInAs": "Angemeldet als", "loginPrompt": "Melde dich an, um Favoriten zu speichern und geräteübergreifend zu synchronisieren.", "haveAccount": "Schon ein Konto? Anmelden", "noAccount": "Kein Konto? Registrieren", "notConfigured": "Die Anmeldung ist noch nicht konfiguriert.", "error": "Etwas ist schiefgelaufen. Prüfe deine Daten." },
-  "live": { "title": "Live", "commentary": "Liveticker" },
+  "live": { "winProb": "Siegchance", "title": "Live", "commentary": "Liveticker" },
   "stage": { "group": "Gruppe {letter}", "groupStage": "Gruppenphase", "r16": "Achtelfinale", "qf": "Viertelfinale", "sf": "Halbfinale", "third": "Spiel um Platz 3", "final": "Finale" },
   "comingSoon": "Demnächst"
 }

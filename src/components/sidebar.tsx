@@ -4,12 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { TABS, isActive, NavIcon } from "./nav-config";
+import { useHasLive } from "@/lib/use-live";
 
 /** Desktop-only left sidebar, sitting below the header. Hidden below the `lg`
  * breakpoint, where the mobile BottomNav takes over. */
 export function Sidebar() {
   const pathname = usePathname();
   const t = useTranslations("nav");
+  const hasLive = useHasLive();
 
   return (
     <aside className="fixed bottom-0 left-0 top-14 z-40 hidden w-64 flex-col border-r border-white/10 bg-[#020B0A] px-4 py-6 lg:flex">
@@ -29,6 +31,9 @@ export function Sidebar() {
             >
               <NavIcon name={tab.icon} size={20} />
               {t(tab.key)}
+              {tab.href === "/" && hasLive && (
+                <span className="ml-auto h-2 w-2 animate-pulse rounded-full bg-red-500" />
+              )}
             </Link>
           );
         })}

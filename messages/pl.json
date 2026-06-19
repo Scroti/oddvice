@@ -17,7 +17,7 @@
   "footer": { "disclaimer": "18+ · Graj odpowiedzialnie. Typy mają charakter informacyjny i nie gwarantują wygranych.", "help": "Potrzebujesz pomocy?", "helpUrl": "https://www.begambleaware.org" },
   "onboarding": { "skip": "Pomiń", "next": "Dalej", "getStarted": "Zaczynaj" },
   "auth": { "signInTitle": "Zaloguj się", "signUpTitle": "Utwórz konto", "signIn": "Zaloguj się", "signUp": "Zarejestruj się", "email": "E-mail", "password": "Hasło", "google": "Kontynuuj z Google", "apple": "Kontynuuj z Apple", "or": "lub", "logout": "Wyloguj", "signedInAs": "Zalogowano jako", "loginPrompt": "Zaloguj się, aby zapisywać ulubione i synchronizować na urządzeniach.", "haveAccount": "Masz konto? Zaloguj się", "noAccount": "Nie masz konta? Zarejestruj się", "notConfigured": "Logowanie nie jest jeszcze skonfigurowane.", "error": "Coś poszło nie tak. Sprawdź dane." },
-  "live": { "title": "Na żywo", "commentary": "Komentarz" },
+  "live": { "winProb": "Szanse na wygraną", "title": "Na żywo", "commentary": "Komentarz" },
   "stage": { "group": "Grupa {letter}", "groupStage": "Faza grupowa", "r16": "1/8 finału", "qf": "Ćwierćfinały", "sf": "Półfinały", "third": "Mecz o 3. miejsce", "final": "Finał" },
   "comingSoon": "Wkrótce"
 }
