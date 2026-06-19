@@ -1,14 +1,18 @@
+import { cookies } from "next/headers";
 import { Header } from "@/components/header";
 import { BottomNav } from "@/components/bottom-nav";
 import { Sidebar } from "@/components/sidebar";
 import { ResponsibleFooter } from "@/components/responsible-footer";
 import { Onboarding } from "@/components/onboarding";
 
-export default function AppLayout({
+export default async function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Decide server-side so the overlay is in the initial HTML (no feed flash).
+  const onboarded =
+    (await cookies()).get("oddvice_onboarded")?.value === "1";
   return (
     <div className="min-h-dvh overflow-x-clip bg-[#020B0A] text-white">
       <Header />
@@ -24,7 +28,7 @@ export default function AppLayout({
       </div>
 
       <BottomNav />
-      <Onboarding />
+      {!onboarded && <Onboarding />}
     </div>
   );
 }

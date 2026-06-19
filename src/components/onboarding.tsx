@@ -1,29 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-const STORAGE_KEY = "oddvice_onboarded";
+const COOKIE = "oddvice_onboarded";
 
+/** Onboarding overlay. The (app) layout only renders it when the
+ * `oddvice_onboarded` cookie is absent (decided server-side, so there's no
+ * client-side flash of the feed before the overlay appears). */
 export function Onboarding() {
   const t = useTranslations();
   const router = useRouter();
-  const [ready, setReady] = useState(false);
-  const [show, setShow] = useState(false);
   const [slide, setSlide] = useState(0);
+  const [show, setShow] = useState(true);
+  const [leaving, setLeaving] = useState(false);
 
-  useEffect(() => {
-    try {
-      setShow(localStorage.getItem(STORAGE_KEY) !== "1");
-    } catch {
-      setShow(false);
-    }
-    setReady(true);
-  }, []);
+  // While navigating to /login, keep a clean full-screen cover so the feed
+  // behind the overlay never flashes through.
+  if (leaving) {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020B0A]">
+        <Image src="/logo.svg" alt="Oddvice" width={56} height={56} unoptimized />
+      </div>
+    );
+  }
 
-  if (!ready || !show) return null;
+  if (!show) return null;
 
   const slides = [
     {
@@ -46,13 +50,20 @@ export function Onboarding() {
   const last = slide === slides.length - 1;
 
   function done(goLogin: boolean) {
+    // Persist as a cookie so the server gates the overlay on the next load
+    // (no client-only flash). Mirror to localStorage too.
+    document.cookie = `${COOKIE}=1; path=/; max-age=31536000; samesite=lax`;
     try {
-      localStorage.setItem(STORAGE_KEY, "1");
+      localStorage.setItem(COOKIE, "1");
     } catch {}
-    setShow(false);
     if (goLogin) {
+      // Keep the cover up through the navigation — no feed flash before /login.
+      setLeaving(true);
       router.push("/login");
       router.refresh();
+    } else {
+      // Skip → reveal the app without an account (guest / feed).
+      setShow(false);
     }
   }
 
@@ -72,7 +83,7 @@ export function Onboarding() {
       ))}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#020B0A]/70 via-[#020B0A]/55 to-[#020B0A]" />
 
-      {/* Skip */}
+      {/* Skip → guest (no account) */}
       <div className="relative flex justify-end p-5">
         <button
           onClick={() => done(false)}
