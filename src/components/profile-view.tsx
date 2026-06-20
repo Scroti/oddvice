@@ -11,6 +11,7 @@ import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { InstallPrompt } from "@/components/pwa";
 import { Icon } from "@/components/icon";
+import { useSettings } from "@/lib/settings";
 
 const AVATARS: { key: string; emoji: string; from: string; to: string }[] = [
   { key: "ball", emoji: "⚽", from: "#C8F04A", to: "#38BDF8" },
@@ -74,11 +75,13 @@ export function ProfileView() {
   const [userId, setUserId] = useState<string | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const [notif, setNotif] = useState(true);
+  const { settings, setNotifPref, setFavTeam } = useSettings();
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
+  const [favOpen, setFavOpen] = useState(false);
+  const [favDraft, setFavDraft] = useState("");
 
   const [pq, setPq] = useState("");
   const [results, setResults] = useState<PlayerHit[]>([]);
@@ -87,7 +90,6 @@ export function ProfileView() {
   useEffect(() => {
     setAvatar(localStorage.getItem("oddvice_avatar"));
     setUsername(localStorage.getItem("oddvice_username"));
-    setNotif(localStorage.getItem("oddvice_notif_pref") !== "0");
   }, []);
 
   useEffect(() => {
@@ -155,10 +157,9 @@ export function ProfileView() {
     pushCloud({ username: v || null });
     setNameOpen(false);
   };
-  const toggleNotif = () => {
-    const v = !notif;
-    setNotif(v);
-    localStorage.setItem("oddvice_notif_pref", v ? "1" : "0");
+  const saveFav = () => {
+    setFavTeam(favDraft.trim());
+    setFavOpen(false);
   };
   const runSearch = async () => {
     const q = pq.trim();
@@ -250,16 +251,46 @@ export function ProfileView() {
 
       {/* Settings */}
       <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-4">
-        <div className="flex items-center gap-3 py-3.5">
-          <Icon name="bell" className="text-white/55" />
-          <span className="flex-1 text-sm">{t("profile.notifications")}</span>
-          <button
-            onClick={toggleNotif}
-            aria-label="Toggle notifications"
-            className={`relative h-6 w-11 rounded-full transition-colors ${notif ? "bg-[#C8F04A]" : "bg-white/15"}`}
-          >
-            <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${notif ? "left-[22px]" : "left-0.5"}`} />
-          </button>
+        <button
+          onClick={() => {
+            setFavDraft(settings.favTeam);
+            setFavOpen(true);
+          }}
+          className="flex w-full items-center gap-3 py-3.5 text-left"
+        >
+          <Icon name="shield" className="text-white/55" />
+          <span className="flex-1 text-sm">Favorite team</span>
+          <span className="max-w-[55%] truncate text-[13px] text-white/40">
+            {settings.favTeam || "Add"}
+          </span>
+          <Icon name="chevron" size={16} className="text-white/30" />
+        </button>
+        <div className="border-t border-white/[0.06] py-3">
+          <div className="mb-1 flex items-center gap-3">
+            <Icon name="bell" className="text-white/55" />
+            <span className="flex-1 text-sm">{t("profile.notifications")}</span>
+          </div>
+          {(
+            [
+              ["goals", "Goals"],
+              ["news", "News"],
+              ["tips", "Tips"],
+            ] as const
+          ).map(([k, label]) => {
+            const on = settings.notif[k];
+            return (
+              <div key={k} className="flex items-center gap-3 py-1.5 pl-9">
+                <span className="flex-1 text-sm text-white/70">{label}</span>
+                <button
+                  onClick={() => setNotifPref(k, !on)}
+                  aria-label={`Toggle ${label}`}
+                  className={`relative h-6 w-11 rounded-full transition-colors ${on ? "bg-[#C8F04A]" : "bg-white/15"}`}
+                >
+                  <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${on ? "left-[22px]" : "left-0.5"}`} />
+                </button>
+              </div>
+            );
+          })}
         </div>
         <div className="flex items-center gap-3 border-t border-white/[0.06] py-3.5">
           <Icon name="globe" className="text-white/55" />
@@ -366,6 +397,31 @@ export function ProfileView() {
                 Cancel
               </button>
               <button onClick={saveName} className="flex-1 rounded-lg bg-[#C8F04A] py-2.5 text-sm font-bold text-[#020B0A]">
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Favorite team editor */}
+      {favOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-6" onClick={() => setFavOpen(false)}>
+          <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#08110F] p-5" onClick={(e) => e.stopPropagation()}>
+            <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-white/45">Favorite team</p>
+            <input
+              autoFocus
+              value={favDraft}
+              onChange={(e) => setFavDraft(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && saveFav()}
+              placeholder="e.g. Argentina"
+              className="w-full rounded-lg border border-white/15 bg-white/[0.03] px-4 py-3 text-sm outline-none focus:border-[#C8F04A]"
+            />
+            <div className="mt-4 flex gap-2.5">
+              <button onClick={() => setFavOpen(false)} className="flex-1 rounded-lg border border-white/15 py-2.5 text-sm font-semibold">
+                Cancel
+              </button>
+              <button onClick={saveFav} className="flex-1 rounded-lg bg-[#C8F04A] py-2.5 text-sm font-bold text-[#020B0A]">
                 Save
               </button>
             </div>

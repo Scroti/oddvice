@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getLive, getNews, getTips, getUpcoming } from "./api";
+import { getSettings } from "./settings";
 
 export type Notif = {
   id: string;
@@ -93,12 +94,13 @@ export function useNotificationWatcher() {
     let first = true;
 
     const tick = async () => {
+      const prefs = getSettings();
       try {
         const { matches } = await getLive();
         const liveIds = new Set(matches.map((m) => m.fixtureId));
         for (const m of matches) {
           const prev = seen.get(m.fixtureId);
-          if (prev && !first) {
+          if (prev && !first && prefs.notif.goals) {
             const score = `${m.homeGoals}-${m.awayGoals}`;
             if (m.homeGoals > prev.h)
               addNotification({ id: `g-${m.fixtureId}-h-${m.homeGoals}`, title: `⚽ ${m.home} ${score} ${m.away}`, body: `${m.home} scored · ${m.elapsed}'`, href: "/" });
@@ -110,7 +112,8 @@ export function useNotificationWatcher() {
         if (!first) {
           for (const [fid, s] of [...seen.entries()]) {
             if (!liveIds.has(fid)) {
-              addNotification({ id: `final-${fid}`, title: `🏁 ${s.home} ${s.h}-${s.a} ${s.away}`, body: "Full time", href: "/" });
+              if (prefs.notif.goals)
+                addNotification({ id: `final-${fid}`, title: `🏁 ${s.home} ${s.h}-${s.a} ${s.away}`, body: "Full time", href: "/" });
               seen.delete(fid);
             }
           }
@@ -137,18 +140,27 @@ export function useNotificationWatcher() {
             addNotification({ id: `soon-${m.id}`, title: `⏰ ${m.homeTeam} vs ${m.awayTeam}`, body: `Kicks off at ${hhmm}`, href: `/matches/${m.id}` });
           }
         }
+        // Followed matches → a star reminder.
+        for (const m of matches) {
+          if (prefs.follows.includes(m.id) && m.kickoffAt) {
+            const d = new Date(m.kickoffAt);
+            const when = `${d.toLocaleDateString(undefined, { day: "numeric", month: "short" })} · ${d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}`;
+            addNotification({ id: `follow-${m.id}`, title: `⭐ ${m.homeTeam} vs ${m.awayTeam}`, body: `You're following · ${when}`, href: `/matches/${m.id}` });
+          }
+        }
       } catch {
         // ignore
       }
     };
 
     const seedSlow = async () => {
+      const prefs = getSettings();
       try {
         const today = new Date().toISOString().slice(0, 10);
         const { tips } = await getTips();
         const b = tips[0];
         const tip = b?.tips?.[0];
-        if (b && tip)
+        if (prefs.notif.tips && b && tip)
           addNotification({ id: `tip-${today}`, title: "💡 Tip of the day", body: `${b.homeTeam} vs ${b.awayTeam} — ${tip.selection}`, href: "/bets" });
       } catch {
         // ignore
@@ -156,7 +168,7 @@ export function useNotificationWatcher() {
       try {
         const { articles } = await getNews();
         const a = articles[0];
-        if (a) addNotification({ id: `news-${a.id}`, title: `📰 ${a.title}`, body: a.source, href: `/news/${a.id}` });
+        if (prefs.notif.news && a) addNotification({ id: `news-${a.id}`, title: `📰 ${a.title}`, body: a.source, href: `/news/${a.id}` });
       } catch {
         // ignore
       }

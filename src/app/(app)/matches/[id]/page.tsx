@@ -20,6 +20,7 @@ import { TeamStats } from "@/components/team-stats";
 import { Pitch } from "@/components/pitch";
 import { MatchStatsTable } from "@/components/match-stats-table";
 import { LocalTime } from "@/components/local-time";
+import { FollowButton } from "@/components/follow-button";
 import { watchUrl } from "@/lib/watch";
 
 export const dynamic = "force-dynamic";
@@ -110,7 +111,10 @@ export default async function MatchDetailPage({
       <BackLink label={t("matchDetail.back")} />
 
       {/* Scoreboard */}
-      <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <section className="relative rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+        <div className="absolute right-3 top-3">
+          <FollowButton matchId={match.id} size={22} />
+        </div>
         <p className="text-center text-xs font-bold uppercase tracking-widest text-white/40">
           {ls(match.league)}
         </p>

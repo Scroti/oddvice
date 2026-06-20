@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { Match } from "@/lib/api";
 import { localizeStage } from "@/lib/stage";
 import { LocalTime } from "@/components/local-time";
+import { FollowButton } from "@/components/follow-button";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -56,8 +57,11 @@ export function MatchCard({ match }: { match: Match }) {
     <Link
       href={`/matches/${match.id}`}
       prefetch={false}
-      className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/40 hover:bg-white/[0.04]"
+      className="relative block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:-translate-y-0.5 hover:border-[#C8F04A]/40 hover:bg-white/[0.04]"
     >
+      <div className="absolute right-1.5 top-1.5 z-10">
+        <FollowButton matchId={match.id} />
+      </div>
       <p className="mb-3 truncate text-center text-[11px] font-bold uppercase tracking-widest text-white/40">
         {localizeStage(match.league, ts)}
       </p>
