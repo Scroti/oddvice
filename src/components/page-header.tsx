@@ -2,9 +2,9 @@
 
 import { useTranslations } from "next-intl";
 
-export function PageHeader({ subtitle }: { subtitle?: string }) {
-  if (!subtitle) return null;
-  return <p className="mb-6 text-sm text-white/55">{subtitle}</p>;
+// Tab subtitles ("2026 World Cup news." etc.) were removed — renders nothing now.
+export function PageHeader(_props: { subtitle?: string }) {
+  return null;
 }
 
 /** Styled empty state for sections that aren't built out yet. */

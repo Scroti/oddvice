@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { API_URL, getHealth, searchPlayers, type PlayerHit } from "@/lib/api";
+import { searchPlayers, type PlayerHit } from "@/lib/api";
 import { usePremium } from "@/lib/use-premium";
 import { createClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
@@ -66,6 +67,7 @@ function Avatar({ value, name, size }: { value: string | null; name: string; siz
 
 export function ProfileView() {
   const t = useTranslations();
+  const router = useRouter();
   const { premium } = usePremium();
 
   const [email, setEmail] = useState<string | null>(null);
@@ -73,7 +75,6 @@ export function ProfileView() {
   const [avatar, setAvatar] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [notif, setNotif] = useState(true);
-  const [status, setStatus] = useState<"checking" | "online" | "offline">("checking");
 
   const [avatarOpen, setAvatarOpen] = useState(false);
   const [nameOpen, setNameOpen] = useState(false);
@@ -119,16 +120,6 @@ export function ProfileView() {
       apply(s?.user?.id ?? null, s?.user?.email ?? null),
     );
     return () => sub.subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    const c = new AbortController();
-    getHealth(c.signal)
-      .then(() => setStatus("online"))
-      .catch(() => {
-        if (!c.signal.aborted) setStatus("offline");
-      });
-    return () => c.abort();
   }, []);
 
   const displayName = username || (email ? email.split("@")[0] : "Guest");
@@ -187,16 +178,9 @@ export function ProfileView() {
     const supabase = createClient();
     await supabase.auth.signOut();
     setEmail(null);
+    setUserId(null);
+    router.refresh();
   }
-
-  const statusDot =
-    status === "online"
-      ? "bg-green-500"
-      : status === "offline"
-        ? "bg-red-500"
-        : "bg-yellow-500 animate-pulse";
-  const statusLabel =
-    status === "online" ? t("apiStatus.online") : status === "offline" ? t("apiStatus.offline") : t("apiStatus.checking");
 
   return (
     <div className="flex flex-col gap-5">
@@ -295,7 +279,7 @@ export function ProfileView() {
 
       <InstallPrompt />
 
-      {/* Responsible gambling */}
+      {/* Responsible gambling card stays; server-status row removed */}
       <div className="rounded-2xl border border-[#FCD34D]/25 bg-[#FCD34D]/[0.06] p-4">
         <div className="mb-1 flex items-center gap-2">
           <span className="rounded bg-[#FCD34D] px-1.5 py-0.5 text-[11px] font-black text-[#020B0A]">18+</span>
@@ -310,16 +294,6 @@ export function ProfileView() {
         >
           {t("profile.rgHelp")} ↗
         </a>
-      </div>
-
-      {/* Server status */}
-      <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-        <div className="flex items-center gap-2 text-sm">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-white/40">{t("profile.serverStatus")}</span>
-          <span className={`ml-auto h-2 w-2 rounded-full ${statusDot}`} />
-          <span className="text-white/70">{statusLabel}</span>
-        </div>
-        <p className="mt-1.5 text-[11px] text-white/35">{API_URL.replace(/^https?:\/\//, "")}</p>
       </div>
 
       {/* Avatar picker */}

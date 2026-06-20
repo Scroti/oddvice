@@ -16,7 +16,6 @@ export default async function PremiumPage() {
           </svg>
         </div>
         <h1 className="font-display text-2xl font-extrabold uppercase">{t("title")}</h1>
-        <p className="mt-1 text-sm text-white/55">{t("subtitle")}</p>
       </div>
 
       <div className="mb-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">

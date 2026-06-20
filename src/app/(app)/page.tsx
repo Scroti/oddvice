@@ -11,6 +11,7 @@ import { MatchCard } from "@/components/match-card";
 import { StandingsTabs } from "@/components/standings-tabs";
 import { LiveScoreboard } from "@/components/live-scoreboard";
 import { LocalTime } from "@/components/local-time";
+import { LoginGate } from "@/components/login-gate";
 
 export const dynamic = "force-dynamic";
 
@@ -102,8 +103,12 @@ export default async function Home() {
       {/* Live matches (auto-refresh; hidden when none live) */}
       <LiveScoreboard />
 
-      {/* Next match — soonest upcoming fixture */}
-      {upcoming.length > 0 && <NextMatch match={upcoming[0]} />}
+      {/* Next match — soonest upcoming fixture (sign-in gated) */}
+      {upcoming.length > 0 && (
+        <LoginGate message="Sign in to see the next match">
+          <NextMatch match={upcoming[0]} />
+        </LoginGate>
+      )}
 
       {/* Featured: pontul zilei */}
       <section className="relative overflow-hidden rounded-2xl border border-[#C8F04A]/25 bg-gradient-to-br from-[#C8F04A]/20 via-white/[0.02] to-transparent p-6">

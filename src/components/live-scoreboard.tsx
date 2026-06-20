@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { getLive, type LiveMatch } from "@/lib/api";
 import { Commentary } from "@/components/commentary";
 import { GoalNotifyButton } from "@/components/goal-notify-button";
+import { LoginGate } from "@/components/login-gate";
 
 function abbr(name: string): string {
   return name.replace(/[^a-zA-Z ]/g, "").trim().slice(0, 3).toUpperCase() || "—";
@@ -143,7 +144,9 @@ function LiveCard({
 
       {expanded && (
         <div className="mt-4">
-          <Commentary fixtureId={m.fixtureId} embedded />
+          <LoginGate message="Sign in to see live commentary">
+            <Commentary fixtureId={m.fixtureId} embedded />
+          </LoginGate>
         </div>
       )}
     </div>
