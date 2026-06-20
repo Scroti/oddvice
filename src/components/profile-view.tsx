@@ -311,22 +311,6 @@ export function ProfileView() {
 
       <InstallPrompt />
 
-      {/* Responsible gambling card stays; server-status row removed */}
-      <div className="rounded-2xl border border-[#FCD34D]/25 bg-[#FCD34D]/[0.06] p-4">
-        <div className="mb-1 flex items-center gap-2">
-          <span className="rounded bg-[#FCD34D] px-1.5 py-0.5 text-[11px] font-black text-[#020B0A]">18+</span>
-          <span className="text-sm font-semibold">{t("profile.rgTitle")}</span>
-        </div>
-        <p className="text-xs leading-relaxed text-white/60">{t("profile.rgText")}</p>
-        <a
-          href={t("profile.rgHelpUrl")}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 inline-block text-xs font-semibold text-[#FCD34D]"
-        >
-          {t("profile.rgHelp")} ↗
-        </a>
-      </div>
 
       {/* Avatar picker */}
       {avatarOpen && (

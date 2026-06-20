@@ -1,6 +1,6 @@
 /* Oddvice service worker — offline caching + push notifications.
  * Versioned cache: bump CACHE_VERSION to invalidate old caches on deploy. */
-const CACHE_VERSION = "v12";
+const CACHE_VERSION = "v13";
 const CACHE_NAME = `oddvice-${CACHE_VERSION}`;
 const OFFLINE_URL = "/offline";
 
