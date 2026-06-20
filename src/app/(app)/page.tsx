@@ -77,13 +77,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-8">
-      {/* Live matches (auto-refresh; hidden when none live) */}
-      <LiveScoreboard />
-
-      {/* Next match — soonest upcoming fixture */}
-      {upcoming.length > 0 && <NextMatch match={upcoming[0]} />}
-
-      {/* Sport categories */}
+      {/* Sport categories — first on the feed */}
       <section className="grid grid-cols-3 gap-3">
         {SPORTS.map((s) => (
           <div
@@ -104,6 +98,12 @@ export default async function Home() {
           </div>
         ))}
       </section>
+
+      {/* Live matches (auto-refresh; hidden when none live) */}
+      <LiveScoreboard />
+
+      {/* Next match — soonest upcoming fixture */}
+      {upcoming.length > 0 && <NextMatch match={upcoming[0]} />}
 
       {/* Featured: pontul zilei */}
       <section className="relative overflow-hidden rounded-2xl border border-[#C8F04A]/25 bg-gradient-to-br from-[#C8F04A]/20 via-white/[0.02] to-transparent p-6">
