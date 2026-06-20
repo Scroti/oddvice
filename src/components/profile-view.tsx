@@ -179,6 +179,7 @@ export function ProfileView() {
     await supabase.auth.signOut();
     setEmail(null);
     setUserId(null);
+    router.replace("/");
     router.refresh();
   }
 
