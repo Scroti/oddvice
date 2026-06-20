@@ -105,6 +105,7 @@ export type Article = {
   link: string;
   source: string;
   summary: string;
+  image?: string;
   publishedAt: string | null;
 };
 

@@ -39,6 +39,14 @@ export default async function ArticlePage({
     <article className="flex flex-col gap-5">
       <BackLink label={t("back")} />
 
+      {article.image && (
+        <img
+          src={article.image}
+          alt=""
+          className="aspect-[16/9] w-full rounded-xl object-cover"
+        />
+      )}
+
       <div className="flex items-center gap-2 text-xs text-white/50">
         {article.source && (
           <span className="rounded-full bg-[#C8F04A]/15 px-2 py-0.5 font-medium text-[#C8F04A]">

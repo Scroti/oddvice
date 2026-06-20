@@ -69,6 +69,7 @@ export function ProfileView() {
   const { premium } = usePremium();
 
   const [email, setEmail] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [notif, setNotif] = useState(true);
@@ -91,9 +92,31 @@ export function ProfileView() {
   useEffect(() => {
     if (!isSupabaseConfigured) return;
     const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => setEmail(data.user?.email ?? null));
+    const apply = async (uid: string | null, mail: string | null) => {
+      setEmail(mail);
+      setUserId(uid);
+      if (!uid) return;
+      try {
+        const { data } = await supabase
+          .from("profiles")
+          .select("username, avatar")
+          .eq("id", uid)
+          .maybeSingle();
+        if (data?.username != null) {
+          setUsername(data.username);
+          localStorage.setItem("oddvice_username", data.username);
+        }
+        if (data?.avatar != null) {
+          setAvatar(data.avatar);
+          localStorage.setItem("oddvice_avatar", data.avatar);
+        }
+      } catch {
+        // ignore — keep local values
+      }
+    };
+    supabase.auth.getUser().then(({ data }) => apply(data.user?.id ?? null, data.user?.email ?? null));
     const { data: sub } = supabase.auth.onAuthStateChange((_e, s) =>
-      setEmail(s?.user?.email ?? null),
+      apply(s?.user?.id ?? null, s?.user?.email ?? null),
     );
     return () => sub.subscription.unsubscribe();
   }, []);
@@ -110,15 +133,35 @@ export function ProfileView() {
 
   const displayName = username || (email ? email.split("@")[0] : "Guest");
 
+  // Push the profile to Supabase when signed in (non-blocking; local already saved).
+  const pushCloud = (next: { username?: string | null; avatar?: string | null }) => {
+    if (!isSupabaseConfigured || !userId) return;
+    const supabase = createClient();
+    void supabase
+      .from("profiles")
+      .upsert({
+        id: userId,
+        username: next.username !== undefined ? next.username : username,
+        avatar: next.avatar !== undefined ? next.avatar : avatar,
+        updated_at: new Date().toISOString(),
+      })
+      .then(
+        () => {},
+        () => {},
+      );
+  };
+
   const saveAvatar = (v: string) => {
     setAvatar(v);
     localStorage.setItem("oddvice_avatar", v);
+    pushCloud({ avatar: v });
     setAvatarOpen(false);
   };
   const saveName = () => {
     const v = nameDraft.trim();
     setUsername(v || null);
     localStorage.setItem("oddvice_username", v);
+    pushCloud({ username: v || null });
     setNameOpen(false);
   };
   const toggleNotif = () => {
